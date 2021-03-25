@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Terrain
+  - EnemyProjectile
+  - PlayerProjectile
+  - Enemy
+  - Player
+  - CharacterFeet
+  - ArenaWalls
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Enemy
+    uniqueID: 3006834625
+    locked: 0
+  - name: Player
+    uniqueID: 2996801881
+    locked: 0
+  - name: Projectile
+    uniqueID: 1195681221
+    locked: 0
+  - name: Arena
+    uniqueID: 3969316829
+    locked: 0
+  - name: Terrain
+    uniqueID: 4042147397
+    locked: 0
+  - name: Player Hand
+    uniqueID: 617659015
+    locked: 0
+  - name: SpawnEffects
+    uniqueID: 514682769
+    locked: 0
