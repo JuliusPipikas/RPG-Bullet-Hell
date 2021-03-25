@@ -39,7 +39,7 @@ public class EnemyFactory : MonoBehaviour
     {
         float x = Random.Range(-368, 368) / 100f;
         float y = Random.Range(-368, 368) / 100f;
-        SpawnEnemy("Goblin", x, y);
+        SpawnEnemy("Skeleton", x, y);
     }
 
     public void SpawnEnemy(string name, float x, float y)

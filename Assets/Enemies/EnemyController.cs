@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
@@ -35,9 +37,35 @@ public class EnemyController : MonoBehaviour
     private Vector3 walkPosition = Vector3.zero;
     private bool firstTimeShoot = true;
     private bool firstTimeMove = true;
+    private float angle;
 
     [SerializeField]
     GameObject healthBar;
+
+    [SerializeField]
+    private float timeBetweenShots = 1f;
+
+    enum shootingTypes
+    {
+        Continuous,
+        Arc,
+        ArcTight,
+        Circle,
+        Spiral,
+        Random
+    }
+
+    [SerializeField]
+    shootingTypes shootingType = shootingTypes.Continuous;
+
+    [SerializeField]
+    private int numberOfShots = 1;
+
+    [SerializeField]
+    private float distanceAngle = 16f;
+
+    [SerializeField]
+    private float radius = 0.1f;
 
     public Vector3 SpawnPoofOffset = Vector3.zero;
 
@@ -52,8 +80,8 @@ public class EnemyController : MonoBehaviour
         health = maxHealth;
         changeHealth(0);
         player = GameObject.FindGameObjectWithTag("Player");
-        randShootingOffset = Random.Range(100, 400) / 100;
-        randMovementOffset = Random.Range(0, 300) / 100;
+        randShootingOffset = Random.Range(100, 500) / 100;
+        randMovementOffset = Random.Range(0, 400) / 100;
 
         //Setup for sprites flashing white on hit
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -64,19 +92,106 @@ public class EnemyController : MonoBehaviour
     private void Shoot()
     {
         // Projectile automatically aims for player.
-        // TODO: Create geometrical shooting patterns for non-standard enemies.
-        if (!canShoot) return;
+        if (!canShoot)
+        {
+            return;
+        }
         if (firstTimeShoot)
         {
             StartCoroutine(WaitToShoot(randShootingOffset));
         }
         else
         {
-            GameObject prj = projectilePool.GetObject();
-            prj.transform.position = hand.transform.position; // adjusts the projectiles starting position and rotation according to the enemy hand's position/rotation
-            prj.transform.rotation = hand.transform.rotation;
-            prj.SetActive(true);
-            StartCoroutine(CanShoot());
+            // CONTINUOUS
+            if (shootingType == shootingTypes.Continuous)
+            {
+                GameObject prj = projectilePool.GetObject();
+                prj.transform.position = hand.transform.position; // adjusts the projectiles starting position and rotation according to the enemy hand's position/rotation
+                prj.transform.rotation = hand.transform.rotation;
+                prj.SetActive(true);
+                StartCoroutine(CanShoot());
+            }
+
+            // ARC & ARC TIGHT
+            else if (shootingType == shootingTypes.Arc || shootingType == shootingTypes.ArcTight)
+            {
+                GameObject[] prj = new GameObject[numberOfShots];
+                StartCoroutine(CanShoot());
+                float angleIndex = 0;
+                if (numberOfShots % 2f == 0f)
+                {
+                    angleIndex = numberOfShots / -2 + 0.5f;
+                }
+                else
+                {
+                    angleIndex = -Mathf.FloorToInt(numberOfShots / 2);
+                }
+                float targetAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+
+                if (targetAngle < 0)
+                {
+                    targetAngle = 360 + targetAngle;
+                }
+
+                for (int i = 0; i < numberOfShots; i++)
+                {
+                    float angl = distanceAngle * angleIndex;
+                    prj[i] = projectilePool.GetObject();
+                    var radians = (targetAngle + angl) * Mathf.Deg2Rad;
+
+                    prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position;
+                    if (shootingType == shootingTypes.Arc)
+                    {
+                        prj[i].transform.rotation = hand.transform.rotation * Quaternion.Euler(0, 0, angl);
+                    }
+                    else
+                    {
+                        prj[i].transform.rotation = hand.transform.rotation;
+                    }
+                    prj[i].SetActive(true);
+                    angleIndex++;
+                }
+
+            }
+
+            // CIRCLE
+            else if (shootingType == shootingTypes.Circle)
+            {
+                GameObject[] prj = new GameObject[numberOfShots];
+                StartCoroutine(CanShoot());
+
+                float angleChange = 360 / numberOfShots;
+                float startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+                float incrementAngle = 0;
+
+                if (startAngle < 0)
+                {
+                    startAngle = 360 + startAngle;
+                }
+
+                for (int i = 0; i < numberOfShots; i++)
+                {
+                    incrementAngle = angleChange*i;
+                    prj[i] = projectilePool.GetObject();
+                    var radians = (startAngle + incrementAngle) * Mathf.Deg2Rad;
+
+                    prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position;
+                    prj[i].transform.rotation = hand.transform.rotation * Quaternion.Euler(0, 0, incrementAngle);
+                    prj[i].SetActive(true);
+                }
+            }
+
+            // SPIRAL
+            else if (shootingType == shootingTypes.Spiral)
+            {
+                // TODO
+            }
+
+            // RANDOM
+            else if (shootingType == shootingTypes.Random)
+            {
+                // TODO
+            }
         }
     }
 
@@ -99,7 +214,7 @@ public class EnemyController : MonoBehaviour
     {
         // Time for shooting
         canShoot = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(timeBetweenShots);
         canShoot = true;
     }
 
@@ -122,7 +237,7 @@ public class EnemyController : MonoBehaviour
         }
 
         // Adjusts projectile rotation according to the target (player) location and relative angle.
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         projectileDirection.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
 
         // Changes facing direction according to relative player position.
