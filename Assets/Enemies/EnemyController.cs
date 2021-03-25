@@ -67,6 +67,12 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float radius = 0.1f;
 
+    [SerializeField]
+    private float numberOfSpins = 1f;
+
+    [SerializeField]
+    private float spiralRandomWait = 0.1f;
+
     public Vector3 SpawnPoofOffset = Vector3.zero;
 
     private SpriteRenderer myRenderer;
@@ -184,7 +190,11 @@ public class EnemyController : MonoBehaviour
             // SPIRAL
             else if (shootingType == shootingTypes.Spiral)
             {
-                // TODO
+                StartCoroutine(CanShoot());
+
+                StartCoroutine(SpiralWait());
+
+                
             }
 
             // RANDOM
@@ -199,6 +209,36 @@ public class EnemyController : MonoBehaviour
     {
         projectilePool = pp;
     }
+
+    IEnumerator SpiralWait()
+    {
+        GameObject[] prj = new GameObject[(int)Mathf.Floor(numberOfShots * numberOfSpins)];
+
+        float angleChange = 360 / numberOfShots;
+        float startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+        float incrementAngle = 0;
+
+        if (startAngle < 0)
+        {
+            startAngle = 360 + startAngle;
+        }
+
+        for (int i = 0; i < Mathf.Floor(numberOfShots*numberOfSpins); i++)
+        {
+            
+            incrementAngle = angleChange * i;
+
+            prj[i] = projectilePool.GetObject();
+            var radians = (startAngle + incrementAngle) * Mathf.Deg2Rad;
+
+            prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position;
+            prj[i].transform.rotation = hand.transform.rotation * Quaternion.Euler(0, 0, incrementAngle);
+            prj[i].SetActive(true);
+
+            yield return new WaitForSeconds(spiralRandomWait);
+        }
+    }
+
     IEnumerator WaitToShoot(float time)
     {
         yield return new WaitForSeconds(time);
