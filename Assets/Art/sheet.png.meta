@@ -179,6 +179,12 @@ TextureImporter:
   - first:
       213: 662046916731068474
     second: sheet_34
+  - first:
+      213: -5679681372999991991
+    second: sheet_35
+  - first:
+      213: 7362389692205730110
+    second: sheet_32
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -943,19 +949,19 @@ TextureImporter:
       name: sheet_32
       rect:
         serializedVersion: 2
-        x: 154
-        y: 186
-        width: 3
-        height: 2
+        x: 50
+        y: 176
+        width: 11
+        height: 34
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c98b47a66d76504f0800000000000000
-      internalID: -863169582964885348
+      spriteID: e398bedda667c2660800000000000000
+      internalID: 7362389692205730110
       vertices: []
       indices: 
       edges: []
@@ -964,10 +970,10 @@ TextureImporter:
       name: sheet_33
       rect:
         serializedVersion: 2
-        x: 161
-        y: 186
-        width: 4
-        height: 2
+        x: 131
+        y: 233
+        width: 5
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -977,27 +983,6 @@ TextureImporter:
       bones: []
       spriteID: 8d387c6118f6374f0800000000000000
       internalID: -832198905909771304
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sheet_34
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 186
-        width: 7
-        height: 3
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a30e560c920103900800000000000000
-      internalID: 662046916731068474
       vertices: []
       indices: 
       edges: []

@@ -106,7 +106,7 @@ public class EncounterGenerator : MonoBehaviour
         for (int i = 0; i < 2 * intensity; i++)
         {
             PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, maxRadius, Vector2.zero);
-            PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
         }
     }
 
