@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EncounterGenerator : MonoBehaviour
 {
@@ -24,6 +25,12 @@ public class EncounterGenerator : MonoBehaviour
     [SerializeField]
     private bool skeletonSpawnTest = false;
 
+    [SerializeField]
+    private List<AudioClip> audioClips;
+
+    [SerializeField]
+    private Text encounterText;
+
     private float maxRadius = 3.5f;
 
 
@@ -45,39 +52,56 @@ public class EncounterGenerator : MonoBehaviour
         }
         if (goblinSpawnTest == true)
         {
-            spawnGoblinAmbush(intensityTest);
+            StartCoroutine(spawnGoblinAmbush(intensityTest));
 
             goblinSpawnTest = false;
         }
         if (skeletonSpawnTest == true)
         {
-            spawnSkeletalRuins(intensityTest);
+            StartCoroutine(spawnSkeletalRuins(intensityTest));
 
             skeletonSpawnTest = false;
         }
     }
 
-    public void spawnGoblinAmbush(int intensity)
+    IEnumerator spawnGoblinAmbush(int intensity)
     {
+        encounterText.text = "Goblin Ambush!";
+        encounterText.gameObject.SetActive(true);
+        StartCoroutine(turnOffAudio());
         for(int i = 0; i < Mathf.FloorToInt(3.5f*intensity); i++)
         {
             PlaceTerrainInFreeSpot("Plant", 1f, maxRadius, Vector2.zero);
             PlaceTerrainInFreeSpot("Stone", 1f, maxRadius, Vector2.zero);
         }
 
-        for(int i = 0; i < 2*intensity; i++)
+        yield return new WaitForSeconds(2.5f);
+
+        for (int i = 0; i < 2*intensity; i++)
         {
             PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero);
             PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
         }
     }
 
-    public void spawnSkeletalRuins(int intensity)
+    IEnumerator turnOffAudio()
     {
+        yield return new WaitForSeconds(2f);
+        encounterText.gameObject.SetActive(false);
+    }
+
+    IEnumerator spawnSkeletalRuins(int intensity)
+    {
+        encounterText.text = "Skeletal Ruins!";
+        encounterText.gameObject.SetActive(true);
+        StartCoroutine(turnOffAudio());
+
         for (int i = 0; i < 7 * intensity; i++)
         {
             PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
         }
+
+        yield return new WaitForSeconds(2.5f);
 
         for (int i = 0; i < 2 * intensity; i++)
         {
