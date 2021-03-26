@@ -10,6 +10,12 @@ public class ProjectileController : MonoBehaviour
     [SerializeField]
     private int damage = 1;
 
+    [SerializeField]
+    private float projectileTime = 3f;
+
+    [SerializeField]
+    private GameObject spawnPoof;
+
     private Pooler pool;
 
     private void Start()
@@ -24,7 +30,7 @@ public class ProjectileController : MonoBehaviour
 
     IEnumerator DestroyProjectileAfterTime()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(projectileTime);
         pool.ReturnObject(gameObject);
     }
     
@@ -32,11 +38,6 @@ public class ProjectileController : MonoBehaviour
     {
         transform.Translate(transform.up * speed * Time.deltaTime, Space.World);
     }
-
-   /* private void OnTriggerEnter(Collider other)
-    {
-        pool.ReturnObject(gameObject);
-    }*/
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -48,6 +49,8 @@ public class ProjectileController : MonoBehaviour
         {
             collision.collider.gameObject.GetComponent<EnemyController>().changeHealth(-damage);
         }
+        GameObject spawn = Instantiate(spawnPoof, collision.contacts[0].point, transform.rotation*spawnPoof.transform.rotation);
+        Destroy(spawn, 0.1f);
         pool.ReturnObject(gameObject);
     }
 }

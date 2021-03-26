@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1195681221
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -1460219255197261928, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -152,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   damage: 1
+  projectileTime: 5
+  spawnPoof: {fileID: 2734031342273289974, guid: 8c2b31197256c5b4282bc5a9072b8579, type: 3}
 --- !u!61 &7997472408329029335
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4955,7 +4957,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1195681221
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

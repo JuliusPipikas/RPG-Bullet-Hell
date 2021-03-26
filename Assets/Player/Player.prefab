@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1298165415
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -96796154962138083, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -188,7 +188,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1298165415
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2661919970533589962, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileDirection: {fileID: 4408978542115582576}
   hand: {fileID: 4408978541459380662}
-  movementVelocity: 1
+  movementVelocity: 1.5
   projectilePool: {fileID: 0}
   timeBetweenShots: 0.5
   maxHealth: 10

@@ -14,6 +14,15 @@ public class EnemyController : MonoBehaviour
     private float movementVelocity = 3f;
 
     [SerializeField]
+    private bool moveTowardsPlayer = false;
+
+    [SerializeField]
+    private bool melee = false;
+
+    [SerializeField]
+    private float meleeDistance = 0.5f;
+
+    [SerializeField]
     private Pooler projectilePool;
 
     [SerializeField]
@@ -38,6 +47,8 @@ public class EnemyController : MonoBehaviour
     private bool firstTimeShoot = true;
     private bool firstTimeMove = true;
     private float angle;
+    private bool relocating = false;
+    private Vector2 collissionPoint;
 
     [SerializeField]
     GameObject healthBar;
@@ -86,8 +97,8 @@ public class EnemyController : MonoBehaviour
         health = maxHealth;
         changeHealth(0);
         player = GameObject.FindGameObjectWithTag("Player");
-        randShootingOffset = Random.Range(100, 500) / 100;
-        randMovementOffset = Random.Range(0, 400) / 100;
+        randShootingOffset = Random.Range(200, 500) / 100;
+        randMovementOffset = Random.Range(0, 200) / 100;
 
         //Setup for sprites flashing white on hit
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -261,7 +272,17 @@ public class EnemyController : MonoBehaviour
     void FixedUpdate()
     {
         healthBar.transform.position = transform.position + new Vector3(0, 0.3f);
-        Shoot();
+        if (!melee)
+        {
+            Shoot();
+        }
+        else
+        {
+            if(Vector2.Distance(player.transform.position, transform.position) < meleeDistance)
+            {
+                Shoot();
+            }
+        }
         // Sets the target position of the projectile to the player's current position/
         Vector3 targetPosition = player.transform.position;
 
@@ -315,9 +336,14 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.collider.gameObject.layer != LayerMask.NameToLayer("PlayerProjectile"))
         {
+            collissionPoint = collision.contacts[0].point;
             canWalk = false;
             StopCoroutine(CanWalk());
             walkPosition = transform.position;
+            if (moveTowardsPlayer)
+            {
+                relocating = true;
+            }
         }
     }
 
@@ -334,11 +360,52 @@ public class EnemyController : MonoBehaviour
             // in a direction for a given time "allocatedWalkTime". Then they pause for a time of "stopTime" ("IEnumerator CanWalk()").
             while (true)
             {
-                float angle = Random.Range(0, 360);
-                float radians = angle * Mathf.Deg2Rad;
-                Vector3 movePos = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * 15;
-                StartCoroutine(CanWalk());
-                return movePos;
+                if (!moveTowardsPlayer || relocating)
+                {
+                    float angle = 0f;
+                    if (!relocating)
+                    {
+                        angle = Random.Range(0, 360);
+                    }
+                    else
+                    {
+                        float hit_angle = Mathf.Atan2(transform.position.y - collissionPoint.y, transform.position.x - collissionPoint.x) * Mathf.Rad2Deg;
+
+                        if (hit_angle < 0)
+                        {
+                            hit_angle = 360 + hit_angle;
+                        }
+
+                        int dir = Random.Range(0, 2);
+                        if(dir == 0)
+                        {
+                            angle = Random.Range(210, 290);
+                        }
+                        else
+                        {
+                            angle = Random.Range(70, 150);
+                        }
+
+                        angle += hit_angle;
+
+                        if(angle > 360)
+                        {
+                            angle -= 360;
+                        }
+
+                    }
+                    float radians = angle * Mathf.Deg2Rad;
+                    Vector3 movePos = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * 15;
+                    StartCoroutine(CanWalk());
+                    return movePos;
+                }
+                else
+                {
+                    float radians = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x);
+                    Vector3 movePos = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * 15;
+                    StartCoroutine(CanWalk());
+                    return movePos;
+                }
             }
         }
     }
@@ -352,6 +419,7 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(allocatedWalkTime + variant);
         walkPosition = transform.position;
         yield return new WaitForSeconds(stopTime);
+        relocating = false;
         canWalk = false;
     }
 

@@ -39,10 +39,10 @@ public class EnemyFactory : MonoBehaviour
     {
         float x = Random.Range(-368, 368) / 100f;
         float y = Random.Range(-368, 368) / 100f;
-        SpawnEnemy("Skeleton", x, y);
+        SpawnEnemy("GoblinWithSword", x, y);
     }
 
-    public void SpawnEnemy(string name, float x, float y)
+    public GameObject SpawnEnemy(string name, float x, float y)
     {
         for(int i = 0; i < enemies.Length; i++)
         {
@@ -67,8 +67,9 @@ public class EnemyFactory : MonoBehaviour
                 enemy.transform.Find(name).gameObject.GetComponent<EnemyController>().setProjectilePool(projectilePool);
                 enemy.transform.Find(name).gameObject.GetComponent<EnemyController>().spawnPoof = spawnPoof;
                 enemy.transform.parent = transform;
-                break;
+                return enemy;
             }
         }
+        return null;
     }
 }

@@ -57,7 +57,7 @@ public class TerrainController : MonoBehaviour
         }
     }
 
-    public void SpawnTerrain(string name, float x, float y)
+    public GameObject SpawnTerrain(string name, float x, float y)
     {
         if(name == "Stone")
         {
@@ -73,6 +73,7 @@ public class TerrainController : MonoBehaviour
             TI.setDefaultMaterial(DefaultMaterial);
             stone.GetComponent<SpriteRenderer>().sortingOrder = (int)(y * -1000);
             stone.transform.parent = transform;
+            return stone;
         }
         if (name == "Plant")
         {
@@ -88,6 +89,7 @@ public class TerrainController : MonoBehaviour
             TI.setDefaultMaterial(DefaultMaterial);
             plant.GetComponent<SpriteRenderer>().sortingOrder = (int)(y * -1000);
             plant.transform.parent = transform;
+            return plant;
         }
         if (name == "Pillar")
         {
@@ -103,6 +105,8 @@ public class TerrainController : MonoBehaviour
             TI.setDefaultMaterial(DefaultMaterial);
             pillar.GetComponent<SpriteRenderer>().sortingOrder = (int)(y * -1000);
             pillar.transform.parent = transform;
+            return pillar;
         }
+        return null;
     }
 }
