@@ -103,10 +103,17 @@ public class EncounterGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        for (int i = 0; i < 2 * intensity; i++)
+        if (intensity < 3)
         {
-            PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, maxRadius, Vector2.zero);
-            PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            for (int i = 0; i < 2 * intensity; i++)
+            {
+                PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, maxRadius, Vector2.zero);
+                PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            }
+        }
+        else
+        {
+            PlaceEnemyInFreeSpot("Necromancer", 0.3f, 0.5f, maxRadius-2, Vector2.zero);
         }
     }
 
@@ -128,27 +135,30 @@ public class EncounterGenerator : MonoBehaviour
 
             int ind = 0;
 
+            Debug.Log(objects.Count);
+
             foreach(GameObject objs in objects)
             {
-
-                Transform tr = objs.transform;
-                float distance = Vector2.Distance(spawnPos, tr.position);
-
-                if (ind == 0)
+                if (objs != null)
                 {
-                    if (distance < rangeDistance+1f)
+                    Transform tr = objs.transform;
+                    float distance = Vector2.Distance(spawnPos, tr.position);
+
+                    if (ind == 0)
                     {
-                        foundFreeSpot = false;
+                        if (distance < rangeDistance + 1f)
+                        {
+                            foundFreeSpot = false;
+                        }
+                    }
+                    else
+                    {
+                        if (distance < rangeDistance)
+                        {
+                            foundFreeSpot = false;
+                        }
                     }
                 }
-                else
-                {
-                    if (distance < rangeDistance)
-                    {
-                        foundFreeSpot = false;
-                    }
-                }
-
                 ind++;
             }
 
@@ -213,6 +223,5 @@ public class EncounterGenerator : MonoBehaviour
 
         objects = new List<GameObject>();
         objects.Add(Player);
-        Debug.Log(objects.Count + " objects remain");
     }
 }

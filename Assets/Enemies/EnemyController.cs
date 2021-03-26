@@ -92,6 +92,8 @@ public class EnemyController : MonoBehaviour
 
     public GameObject spawnPoof;
 
+    private bool canSequence = true;
+
     private void Awake()
     {
         health = maxHealth;
@@ -269,18 +271,59 @@ public class EnemyController : MonoBehaviour
         canShoot = true;
     }
 
-    void FixedUpdate()
+    IEnumerator CanSequence()
     {
-        healthBar.transform.position = transform.position + new Vector3(0, 0.3f);
-        if (!melee)
+        // Time for shooting
+        canSequence = false;
+        yield return new WaitForSeconds(timeBetweenShots*2);
+        canSequence = true;
+    }
+
+    IEnumerator NecromancerSequence()
+    {
+        if (!canSequence) {
+            yield break;
+        }
+        
+        if (firstTimeShoot)
         {
-            Shoot();
+            StartCoroutine(WaitToShoot(randShootingOffset));
         }
         else
         {
-            if(Vector2.Distance(player.transform.position, transform.position) < meleeDistance)
+            StartCoroutine(CanSequence());
+            EncounterGenerator eg = GameObject.Find("EncounterGenerator").GetComponent<EncounterGenerator>();
+            
+            eg.PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, 3.5f, Vector2.zero);
+            eg.PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, 3.5f, Vector2.zero);
+
+            
+            yield return new WaitForSeconds(4);
+
+            Shoot();
+        }
+    }
+    void FixedUpdate()
+    {
+        healthBar.transform.position = transform.position + new Vector3(0, 0.3f);
+
+        if (gameObject.name == "Necromancer")
+        {
+            StartCoroutine(NecromancerSequence());
+        }
+        else
+        {
+            if (!melee)
             {
+
                 Shoot();
+            }
+            else
+            {
+                if (Vector2.Distance(player.transform.position, transform.position) < meleeDistance)
+                {
+                    Shoot();
+                }
             }
         }
         // Sets the target position of the projectile to the player's current position/
@@ -434,6 +477,11 @@ public class EnemyController : MonoBehaviour
         {
             GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
             Destroy(spawn, 0.3f);
+            if(gameObject.name == "Necromancer")
+            {
+                EncounterGenerator eg = GameObject.Find("EncounterGenerator").GetComponent<EncounterGenerator>();
+                StartCoroutine(eg.Despawn());
+            }
             Destroy(gameObject.transform.parent.gameObject, 0.2f);
         }
         healthBar.GetComponent<TextMesh>().text = health.ToString() + "/" + maxHealth.ToString();
