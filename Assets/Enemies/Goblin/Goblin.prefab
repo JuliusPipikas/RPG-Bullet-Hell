@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -279,7 +279,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -326,6 +326,9 @@ MonoBehaviour:
   projectileDirection: {fileID: 3062580969251615837}
   hand: {fileID: 7211886277697447412}
   movementVelocity: 1
+  moveTowardsPlayer: 0
+  melee: 0
+  meleeDistance: 0.5
   projectilePool: {fileID: 0}
   stopTime: 1
   allocatedWalkTime: 2
@@ -334,6 +337,12 @@ MonoBehaviour:
   facingRight: 1
   healthBar: {fileID: 4259242075156980506}
   timeBetweenShots: 2
+  shootingType: 0
+  numberOfShots: 1
+  distanceAngle: 16
+  radius: 0.1
+  numberOfSpins: 1
+  spiralRandomWait: 0.1
   SpawnPoofOffset: {x: 0.05, y: 0, z: 0}
   spawnPoof: {fileID: 0}
 --- !u!50 &2984139961261720931

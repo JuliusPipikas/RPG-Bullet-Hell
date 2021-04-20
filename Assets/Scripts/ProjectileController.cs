@@ -26,12 +26,34 @@ public class ProjectileController : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(DestroyProjectileAfterTime());
+        if (gameObject.GetComponent<BoxCollider2D>())
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
+        else if (gameObject.GetComponent<CircleCollider2D>())
+        {
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        }
+        StartCoroutine(EnableCollirAfterTime());
     }
 
     IEnumerator DestroyProjectileAfterTime()
     {
         yield return new WaitForSeconds(projectileTime);
         pool.ReturnObject(gameObject);
+    }
+
+    IEnumerator EnableCollirAfterTime()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (gameObject.GetComponent<BoxCollider2D>())
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        else if (gameObject.GetComponent<CircleCollider2D>())
+        {
+            gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        }
     }
     
     void FixedUpdate()

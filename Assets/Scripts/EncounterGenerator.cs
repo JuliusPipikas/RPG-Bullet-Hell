@@ -135,8 +135,6 @@ public class EncounterGenerator : MonoBehaviour
 
             int ind = 0;
 
-            Debug.Log(objects.Count);
-
             foreach(GameObject objs in objects)
             {
                 if (objs != null)

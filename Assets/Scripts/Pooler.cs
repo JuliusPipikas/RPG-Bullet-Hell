@@ -40,7 +40,10 @@ public class Pooler : MonoBehaviour
     public GameObject GetObject(){
         int totalFree = freeList.Count;
         if (freeList.Count == 0 && !expandable) return null;
-        else if (freeList.Count == 0 && expandable) GenerateNewObject();
+        else if (freeList.Count == 0 && expandable)
+        {
+            GenerateNewObject();
+        }
 
         GameObject prj = freeList[totalFree - 1];
         freeList.RemoveAt(totalFree - 1);
@@ -50,7 +53,6 @@ public class Pooler : MonoBehaviour
 
     public void ReturnObject(GameObject obj)
     {
-        Debug.Assert(usedList.Contains(obj));
         obj.SetActive(false);
         usedList.Remove(obj);
         freeList.Add(obj);
