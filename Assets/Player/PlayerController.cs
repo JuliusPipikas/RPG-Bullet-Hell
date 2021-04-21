@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -29,6 +30,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject healthBar;
+
+    [SerializeField]
+    private List<Sprite> healthbarSprites;
 
     private SpriteRenderer myRenderer;
     private Shader shaderGUItext;
@@ -154,9 +158,10 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(flashWhite());
         }
         health += amount;
-        healthBar.GetComponent<TextMesh>().text = health.ToString() + "/" + maxHealth.ToString();
-
-        
+        if (health >= 0)
+        {
+            healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
+        }
     }
 
     public void setMaxHealth(int amount)

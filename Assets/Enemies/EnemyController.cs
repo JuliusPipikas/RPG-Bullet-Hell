@@ -54,6 +54,12 @@ public class EnemyController : MonoBehaviour
     GameObject healthBar;
 
     [SerializeField]
+    private float healthBarOffset = 0.25f;
+
+    [SerializeField]
+    private List<Sprite> healthbarSprites;
+
+    [SerializeField]
     private float timeBetweenShots = 1f;
 
     enum shootingTypes
@@ -305,7 +311,7 @@ public class EnemyController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        healthBar.transform.position = transform.position + new Vector3(0, 0.3f);
+        healthBar.transform.position = transform.position + new Vector3(0, healthBarOffset);
 
         if (gameObject.name == "Necromancer")
         {
@@ -473,18 +479,21 @@ public class EnemyController : MonoBehaviour
             StartCoroutine(flashWhite());
         }
         health += amount;
-        if(health <= 0)
+        if (health <= 0)
         {
             GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
             Destroy(spawn, 0.3f);
-            if(gameObject.name == "Necromancer")
+            if (gameObject.name == "Necromancer")
             {
                 EncounterGenerator eg = GameObject.Find("EncounterGenerator").GetComponent<EncounterGenerator>();
                 StartCoroutine(eg.Despawn());
             }
             Destroy(gameObject.transform.parent.gameObject, 0.2f);
         }
-        healthBar.GetComponent<TextMesh>().text = health.ToString() + "/" + maxHealth.ToString();
+        if (health >= 0)
+        {
+            healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
+        }
     }
 
     public void setMaxHealth(int amount)
