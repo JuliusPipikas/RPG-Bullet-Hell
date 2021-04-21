@@ -414,7 +414,7 @@ MonoBehaviour:
   stopTime: 1
   allocatedWalkTime: 2
   movementVariant: 1
-  maxHealth: 50
+  maxHealth: 60
   facingRight: 1
   healthBar: {fileID: 8031690967173953546}
   healthBarOffset: 0.4

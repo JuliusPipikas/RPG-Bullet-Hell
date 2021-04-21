@@ -41,22 +41,6 @@ public class @Actions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""SpawnGobbo"",
-                    ""type"": ""Button"",
-                    ""id"": ""239682e9-9443-432a-8153-510573f77bee"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""SpawnTerrain"",
-                    ""type"": ""Button"",
-                    ""id"": ""319cf8d7-5f33-4b65-aa4c-849acbeaa1c2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -136,28 +120,6 @@ public class @Actions : IInputActionCollection, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8f956ce6-c50f-4811-a522-315ce0561873"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SpawnGobbo"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""23d98a9e-4200-4a25-b27a-6ffa26bcb797"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SpawnTerrain"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -169,8 +131,6 @@ public class @Actions : IInputActionCollection, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_SpawnGobbo = m_Player.FindAction("SpawnGobbo", throwIfNotFound: true);
-        m_Player_SpawnTerrain = m_Player.FindAction("SpawnTerrain", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -223,8 +183,6 @@ public class @Actions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_SpawnGobbo;
-    private readonly InputAction m_Player_SpawnTerrain;
     public struct PlayerActions
     {
         private @Actions m_Wrapper;
@@ -232,8 +190,6 @@ public class @Actions : IInputActionCollection, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @SpawnGobbo => m_Wrapper.m_Player_SpawnGobbo;
-        public InputAction @SpawnTerrain => m_Wrapper.m_Player_SpawnTerrain;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -252,12 +208,6 @@ public class @Actions : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                @SpawnGobbo.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpawnGobbo;
-                @SpawnGobbo.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpawnGobbo;
-                @SpawnGobbo.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpawnGobbo;
-                @SpawnTerrain.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpawnTerrain;
-                @SpawnTerrain.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpawnTerrain;
-                @SpawnTerrain.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpawnTerrain;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -271,12 +221,6 @@ public class @Actions : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @SpawnGobbo.started += instance.OnSpawnGobbo;
-                @SpawnGobbo.performed += instance.OnSpawnGobbo;
-                @SpawnGobbo.canceled += instance.OnSpawnGobbo;
-                @SpawnTerrain.started += instance.OnSpawnTerrain;
-                @SpawnTerrain.performed += instance.OnSpawnTerrain;
-                @SpawnTerrain.canceled += instance.OnSpawnTerrain;
             }
         }
     }
@@ -286,7 +230,5 @@ public class @Actions : IInputActionCollection, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
-        void OnSpawnGobbo(InputAction.CallbackContext context);
-        void OnSpawnTerrain(InputAction.CallbackContext context);
     }
 }

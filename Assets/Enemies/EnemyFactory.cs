@@ -16,32 +16,6 @@ public class EnemyFactory : MonoBehaviour
     [SerializeField]
     GameObject spawnPoof;
 
-    private Actions controls;
-
-    private void Awake()
-    {
-        controls = new Actions();
-        controls.Player.SpawnGobbo.performed += _ => SpawnRandomGobbo();
-    }
-
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Disable();
-    }
-
-    // For testing
-    public void SpawnRandomGobbo()
-    {
-        float x = Random.Range(-368, 368) / 100f;
-        float y = Random.Range(-368, 368) / 100f;
-        SpawnEnemy("GoblinWithSword", x, y);
-    }
-
     public GameObject SpawnEnemy(string name, float x, float y)
     {
         for(int i = 0; i < enemies.Length; i++)
@@ -64,8 +38,16 @@ public class EnemyFactory : MonoBehaviour
                         break;
                     }
                 }
-                enemy.transform.Find(name).gameObject.GetComponent<EnemyController>().setProjectilePool(projectilePool);
-                enemy.transform.Find(name).gameObject.GetComponent<EnemyController>().spawnPoof = spawnPoof;
+                if (name != "GoblinStack")
+                {
+                    enemy.transform.Find(name).gameObject.GetComponent<EnemyController>().setProjectilePool(projectilePool);
+                    enemy.transform.Find(name).gameObject.GetComponent<EnemyController>().spawnPoof = spawnPoof;
+                }
+                else
+                {
+                    enemy.transform.Find(name).gameObject.GetComponent<StackController>().setProjectilePool(projectilePool);
+                    enemy.transform.Find(name).gameObject.GetComponent<StackController>().spawnPoof = spawnPoof;
+                }
                 enemy.transform.parent = transform;
                 return enemy;
             }

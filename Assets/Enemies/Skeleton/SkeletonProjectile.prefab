@@ -4934,7 +4934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  damage: 2
+  damage: 1
   projectileTime: 10
   spawnPoof: {fileID: 2734031342273289974, guid: 8c2b31197256c5b4282bc5a9072b8579, type: 3}
 --- !u!50 &174648142930715748

@@ -71,6 +71,10 @@ public class ProjectileController : MonoBehaviour
         {
             collision.collider.gameObject.GetComponent<EnemyController>().changeHealth(-damage);
         }
+        else if (gameObject.layer == LayerMask.NameToLayer("PlayerProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyStack"))
+        {
+            collision.collider.gameObject.GetComponent<StackController>().changeHealth(-damage);
+        }
         GameObject spawn = Instantiate(spawnPoof, collision.contacts[0].point, transform.rotation*spawnPoof.transform.rotation);
         Destroy(spawn, 0.1f);
         pool.ReturnObject(gameObject);

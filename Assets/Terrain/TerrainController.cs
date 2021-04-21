@@ -19,44 +19,6 @@ public class TerrainController : MonoBehaviour
     [SerializeField]
     Material DefaultMaterial;
 
-    private Actions controls;
-
-    private void Awake()
-    {
-        controls = new Actions();
-        controls.Player.SpawnTerrain.performed += _ => SpawnRandomTerrain();
-    }
-
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Disable();
-    }
-
-    // For testing
-    public void SpawnRandomTerrain()
-    {
-        float x = Random.Range(-368, 368) / 100f;
-        float y = Random.Range(-368, 368) / 100f;
-        int rand = Random.Range(0, 3);
-        if (rand == 0)
-        {
-            SpawnTerrain("Pillar", x, y);
-        }
-        else if(rand == 1)
-        {
-            SpawnTerrain("Stone", x, y);
-        }
-        else
-        {
-            SpawnTerrain("Plant", x, y);
-        }
-    }
-
     public GameObject SpawnTerrain(string name, float x, float y)
     {
         if(name == "Stone")

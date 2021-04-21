@@ -66,21 +66,45 @@ public class EncounterGenerator : MonoBehaviour
 
     IEnumerator spawnGoblinAmbush(int intensity)
     {
-        encounterText.text = "Goblin Ambush!";
+        if (intensity < 4)
+        {
+            encounterText.text = "Goblin Ambush!";
+        }
+        else
+        {
+            encounterText.text = "Goblin Stack!";
+        }
         encounterText.gameObject.SetActive(true);
         StartCoroutine(turnOffAudio());
-        for(int i = 0; i < Mathf.FloorToInt(3.5f*intensity); i++)
+        if (intensity < 4)
         {
-            PlaceTerrainInFreeSpot("Plant", 1f, maxRadius, Vector2.zero);
-            PlaceTerrainInFreeSpot("Stone", 1f, maxRadius, Vector2.zero);
+            for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
+            {
+                PlaceTerrainInFreeSpot("Plant", 1f, maxRadius, Vector2.zero);
+                PlaceTerrainInFreeSpot("Stone", 1f, maxRadius, Vector2.zero);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Mathf.FloorToInt(3.5f * 2); i++)
+            {
+                PlaceTerrainInFreeSpot("Plant", 1f, maxRadius, Vector2.zero);
+                PlaceTerrainInFreeSpot("Stone", 1f, maxRadius, Vector2.zero);
+            }
         }
 
         yield return new WaitForSeconds(2.5f);
-
-        for (int i = 0; i < 2*intensity; i++)
+        if (intensity < 4)
         {
-            PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero);
-            PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            for (int i = 0; i < 2 * intensity; i++)
+            {
+                PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero);
+                PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            }
+        }
+        else
+        {
+            PlaceEnemyInFreeSpot("GoblinStack", 0.3f, 0.5f, maxRadius - 2, Vector2.zero);
         }
     }
 
@@ -92,18 +116,35 @@ public class EncounterGenerator : MonoBehaviour
 
     IEnumerator spawnSkeletalRuins(int intensity)
     {
-        encounterText.text = "Skeletal Ruins!";
+        if (intensity < 4)
+        {
+            encounterText.text = "Skeletal Ruins!";
+        }
+        else
+        {
+            encounterText.text = "Necromancer!";
+        }
         encounterText.gameObject.SetActive(true);
         StartCoroutine(turnOffAudio());
 
-        for (int i = 0; i < 7 * intensity; i++)
+        if (intensity < 4)
         {
-            PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+            for (int i = 0; i < 7 * intensity; i++)
+            {
+                PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 7 * 2; i++)
+            {
+                PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+            }
         }
 
         yield return new WaitForSeconds(2.5f);
 
-        if (intensity < 3)
+        if (intensity < 4)
         {
             for (int i = 0; i < 2 * intensity; i++)
             {

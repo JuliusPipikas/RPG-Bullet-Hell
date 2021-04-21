@@ -4,23 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour
+public class StackController : MonoBehaviour
 {
     [SerializeField]
     private Transform projectileDirection;
     [SerializeField]
-    private GameObject hand;
+    private List<GameObject> hands;
     [SerializeField]
     private float movementVelocity = 3f;
 
     [SerializeField]
     private bool moveTowardsPlayer = false;
-
-    [SerializeField]
-    private bool melee = false;
-
-    [SerializeField]
-    private float meleeDistance = 0.5f;
 
     [SerializeField]
     private Pooler projectilePool;
@@ -88,7 +82,7 @@ public class EnemyController : MonoBehaviour
     private float numberOfSpins = 1f;
 
     [SerializeField]
-    private float spiralRandomWait = 0.1f;
+    private float spiralWaitBetweenShots = 0.1f;
 
     public Vector3 SpawnPoofOffset = Vector3.zero;
 
@@ -97,8 +91,6 @@ public class EnemyController : MonoBehaviour
     private Shader shaderSpritesDefault;
 
     public GameObject spawnPoof;
-
-    private bool canSequence = true;
 
     private void Awake()
     {
@@ -127,87 +119,8 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            // CONTINUOUS
-            if (shootingType == shootingTypes.Continuous)
-            {
-                GameObject prj = projectilePool.GetObject();
-                prj.transform.position = hand.transform.position; // adjusts the projectiles starting position and rotation according to the enemy hand's position/rotation
-                prj.transform.rotation = hand.transform.rotation;
-                prj.SetActive(true);
-                StartCoroutine(CanShoot());
-            }
-
-            // ARC & ARC TIGHT
-            else if (shootingType == shootingTypes.Arc || shootingType == shootingTypes.ArcTight)
-            {
-                GameObject[] prj = new GameObject[numberOfShots];
-                StartCoroutine(CanShoot());
-                float angleIndex = 0;
-                if (numberOfShots % 2f == 0f)
-                {
-                    angleIndex = numberOfShots / -2 + 0.5f;
-                }
-                else
-                {
-                    angleIndex = -Mathf.FloorToInt(numberOfShots / 2);
-                }
-                float targetAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
-
-                if (targetAngle < 0)
-                {
-                    targetAngle = 360 + targetAngle;
-                }
-
-                for (int i = 0; i < numberOfShots; i++)
-                {
-                    float angl = distanceAngle * angleIndex;
-                    prj[i] = projectilePool.GetObject();
-                    var radians = (targetAngle + angl) * Mathf.Deg2Rad;
-
-                    prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position;
-                    if (shootingType == shootingTypes.Arc)
-                    {
-                        prj[i].transform.rotation = hand.transform.rotation * Quaternion.Euler(0, 0, angl);
-                    }
-                    else
-                    {
-                        prj[i].transform.rotation = hand.transform.rotation;
-                    }
-                    prj[i].SetActive(true);
-                    angleIndex++;
-                }
-
-            }
-
-            // CIRCLE
-            else if (shootingType == shootingTypes.Circle)
-            {
-                GameObject[] prj = new GameObject[numberOfShots];
-                StartCoroutine(CanShoot());
-
-                float angleChange = 360 / numberOfShots;
-                float startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
-                float incrementAngle = 0;
-
-                if (startAngle < 0)
-                {
-                    startAngle = 360 + startAngle;
-                }
-
-                for (int i = 0; i < numberOfShots; i++)
-                {
-                    incrementAngle = angleChange*i;
-                    prj[i] = projectilePool.GetObject();
-                    var radians = (startAngle + incrementAngle) * Mathf.Deg2Rad;
-
-                    prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position;
-                    prj[i].transform.rotation = hand.transform.rotation * Quaternion.Euler(0, 0, incrementAngle);
-                    prj[i].SetActive(true);
-                }
-            }
-
             // SPIRAL
-            else if (shootingType == shootingTypes.Spiral)
+            if (health > maxHealth/2)
             {
                 StartCoroutine(CanShoot());
 
@@ -217,9 +130,11 @@ public class EnemyController : MonoBehaviour
             }
 
             // RANDOM
-            else if (shootingType == shootingTypes.Random)
+            else
             {
-                // TODO
+                StartCoroutine(CanShoot());
+
+                StartCoroutine(RandomWait());
             }
         }
     }
@@ -234,13 +149,8 @@ public class EnemyController : MonoBehaviour
         GameObject[] prj = new GameObject[(int)Mathf.Floor(numberOfShots * numberOfSpins)];
 
         float angleChange = 360 / numberOfShots;
-        float startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+        float startAngle = 0;
         float incrementAngle = 0;
-
-        if (startAngle < 0)
-        {
-            startAngle = 360 + startAngle;
-        }
 
         for (int i = 0; i < Mathf.Floor(numberOfShots*numberOfSpins); i++)
         {
@@ -251,10 +161,32 @@ public class EnemyController : MonoBehaviour
             var radians = (startAngle + incrementAngle) * Mathf.Deg2Rad;
 
             prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position;
-            prj[i].transform.rotation = hand.transform.rotation * Quaternion.Euler(0, 0, incrementAngle);
+            prj[i].transform.rotation = Quaternion.Euler(0, 0, incrementAngle);
             prj[i].SetActive(true);
 
-            yield return new WaitForSeconds(spiralRandomWait);
+            yield return new WaitForSeconds(spiralWaitBetweenShots);
+        }
+    }
+
+    IEnumerator RandomWait()
+    {
+        GameObject[] prj = new GameObject[(int)Mathf.Floor(numberOfShots * numberOfSpins)];
+
+        float rand_angle;
+
+        for (int i = 0; i < Mathf.Floor(numberOfShots * numberOfSpins); i++)
+        {
+            prj[i] = projectilePool.GetObject();
+            rand_angle = Random.Range(0, 361);
+            var radians = (rand_angle) * Mathf.Deg2Rad;
+
+            float rand_height = Random.Range(-0.5f, 0.5f);
+
+            prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position + new Vector3(0, rand_height, 0);
+            prj[i].transform.rotation = Quaternion.Euler(0, 0, rand_angle);
+            prj[i].SetActive(true);
+
+            yield return new WaitForSeconds(spiralWaitBetweenShots/2);
         }
     }
 
@@ -274,88 +206,18 @@ public class EnemyController : MonoBehaviour
         // Time for shooting
         canShoot = false;
         yield return new WaitForSeconds(timeBetweenShots);
+        
         canShoot = true;
     }
 
-    IEnumerator CanSequence()
-    {
-        // Time for shooting
-        canSequence = false;
-        yield return new WaitForSeconds(timeBetweenShots*2);
-        canSequence = true;
-    }
-
-    IEnumerator NecromancerSequence()
-    {
-        if (!canSequence) {
-            yield break;
-        }
-
-        if (firstTimeShoot)
-        {
-            StartCoroutine(WaitToShoot(randShootingOffset));
-        }
-        else
-        {
-            StartCoroutine(CanSequence());
-            EncounterGenerator eg = GameObject.Find("EncounterGenerator").GetComponent<EncounterGenerator>();
-
-            int rand = Random.Range(0, 2);
-
-            if (rand == 0)
-            {
-                eg.PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, 3.5f, Vector2.zero);
-            }
-            else
-            {
-                eg.PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, 3.5f, Vector2.zero);
-            }
-
-            yield return new WaitForSeconds(3);
-
-            Shoot();
-        }
-    }
     void FixedUpdate()
     {
         healthBar.transform.position = transform.position + new Vector3(0, healthBarOffset);
 
-        if (gameObject.name == "Necromancer")
-        {
-            StartCoroutine(NecromancerSequence());
-        }
-        else
-        {
-            if (!melee)
-            {
-
-                Shoot();
-            }
-            else
-            {
-                if (Vector2.Distance(player.transform.position, transform.position) < meleeDistance)
-                {
-                    Shoot();
-                }
-            }
-        }
+        Shoot();
+        
         // Sets the target position of the projectile to the player's current position/
         Vector3 targetPosition = player.transform.position;
-
-        // Calculates the target (player) direction according to current facing.
-        Vector3 targetDirection;
-        if (facingRight)
-        {
-            targetDirection = targetPosition - transform.position;
-        }
-        else
-        {
-            targetDirection = -targetPosition + transform.position;
-        }
-
-        // Adjusts projectile rotation according to the target (player) location and relative angle.
-        angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        projectileDirection.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
 
         // Changes facing direction according to relative player position.
         if (targetPosition.x > transform.position.x && !facingRight)
@@ -374,6 +236,21 @@ public class EnemyController : MonoBehaviour
             facingRight = !facingRight;
         }
 
+        int rand_angle;
+
+        if (health >= maxHealth / 2)
+        {
+            rand_angle = Random.Range(0, 4);
+        }
+        else
+        {
+            rand_angle = Random.Range(5, 9);
+        }
+        for (int i = 0; i< hands.Count; i++)
+        {
+            
+            hands[i].transform.parent.transform.rotation = hands[i].transform.parent.transform.rotation * Quaternion.Euler(new Vector3(0f, 0f, rand_angle));
+        }
 
         // Movement
         if (canWalk)
@@ -455,13 +332,6 @@ public class EnemyController : MonoBehaviour
                     StartCoroutine(CanWalk());
                     return movePos;
                 }
-                else
-                {
-                    float radians = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x);
-                    Vector3 movePos = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * 15;
-                    StartCoroutine(CanWalk());
-                    return movePos;
-                }
             }
         }
     }
@@ -490,11 +360,7 @@ public class EnemyController : MonoBehaviour
         {
             GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
             Destroy(spawn, 0.3f);
-            if (gameObject.name == "Necromancer")
-            {
-                EncounterGenerator eg = GameObject.Find("EncounterGenerator").GetComponent<EncounterGenerator>();
-                StartCoroutine(eg.Despawn());
-            }
+            
             Destroy(gameObject.transform.parent.gameObject, 0.2f);
         }
         if (health >= 0)
