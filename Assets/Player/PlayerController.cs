@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private Shader shaderGUItext;
     private Shader shaderSpritesDefault;
 
+    private bool playerGotHit = false;
+
     private void Awake()
     {
         controls = new Actions();
@@ -51,6 +53,27 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         controls.Disable();
+    }
+
+    public bool getPlayerGotHit()
+    {
+        return playerGotHit;
+    }
+
+    public void setPlayerGotHit(bool b)
+    {
+        playerGotHit = b;
+    }
+
+    public void startGrace()
+    {
+        StartCoroutine(PlayerHitGrace());
+    }
+
+    public IEnumerator PlayerHitGrace()
+    {
+        yield return new WaitForSeconds(0.5f);
+        setPlayerGotHit(false);
     }
 
     private void Start()

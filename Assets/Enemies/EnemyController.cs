@@ -212,14 +212,6 @@ public class EnemyController : MonoBehaviour
                 StartCoroutine(CanShoot());
 
                 StartCoroutine(SpiralWait());
-
-                
-            }
-
-            // RANDOM
-            else if (shootingType == shootingTypes.Random)
-            {
-                // TODO
             }
         }
     }

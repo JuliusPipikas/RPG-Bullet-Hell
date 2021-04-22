@@ -24,6 +24,10 @@ public class EncounterGenerator : MonoBehaviour
     private bool goblinSpawnTest = false;
     [SerializeField]
     private bool skeletonSpawnTest = false;
+    [SerializeField]
+    private bool raiderSpawnTest = false;
+    [SerializeField]
+    private bool wizardSpawnTest = false;
 
     [SerializeField]
     private List<AudioClip> audioClips;
@@ -61,6 +65,18 @@ public class EncounterGenerator : MonoBehaviour
             StartCoroutine(spawnSkeletalRuins(intensityTest));
 
             skeletonSpawnTest = false;
+        }
+        if (raiderSpawnTest == true)
+        {
+            StartCoroutine(spawnRaiderAttack(intensityTest));
+
+            raiderSpawnTest = false;
+        }
+        if (wizardSpawnTest == true)
+        {
+            StartCoroutine(spawnWizardLair(intensityTest));
+
+            wizardSpawnTest = false;
         }
     }
 
@@ -106,6 +122,85 @@ public class EncounterGenerator : MonoBehaviour
         {
             PlaceEnemyInFreeSpot("GoblinStack", 0.3f, 0.5f, maxRadius - 2, Vector2.zero);
         }
+    }
+
+    IEnumerator spawnRaiderAttack(int intensity)
+    {
+        if (intensity > 3)
+        {
+            intensity = 3;
+        }
+
+        encounterText.text = "Raider Attack!";
+        encounterText.gameObject.SetActive(true);
+
+        StartCoroutine(turnOffAudio());
+
+        for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
+        {
+            PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+            PlaceTerrainInFreeSpot("Stone", 1f, maxRadius, Vector2.zero);
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        int t = 1;
+        if (intensity == 0) t = 0;
+
+        for (int i = 0; i < 1*t + intensity; i++)
+        {
+            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero);
+        }
+
+        if(intensity == 2)
+        {
+            PlaceEnemyInFreeSpot("BanditLeader", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            if (intensity == 3)
+            {
+                PlaceEnemyInFreeSpot("BanditLeader", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            }
+        }
+
+    }
+
+    IEnumerator spawnWizardLair(int intensity)
+    {
+        if (intensity > 3)
+        {
+            intensity = 3;
+        }
+
+        encounterText.text = "Wizard Lair!";
+        encounterText.gameObject.SetActive(true);
+
+        StartCoroutine(turnOffAudio());
+
+        for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
+        {
+            PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+            PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        if(intensity != 3)
+        {
+            for (int i = 0; i < 2 * intensity; i++)
+            {
+                PlaceEnemyInFreeSpot("Slime", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < intensity; i++)
+            {
+                PlaceEnemyInFreeSpot("Slime", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            }
+            PlaceEnemyInFreeSpot("Wizard", 0.3f, 0.5f, maxRadius, Vector2.zero);
+        }
+
+        
+
     }
 
     IEnumerator turnOffAudio()

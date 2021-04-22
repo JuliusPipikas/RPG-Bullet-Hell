@@ -55,7 +55,7 @@ public class ProjectileController : MonoBehaviour
             gameObject.GetComponent<CircleCollider2D>().enabled = true;
         }
     }
-    
+
     void FixedUpdate()
     {
         transform.Translate(transform.up * speed * Time.deltaTime, Space.World);
@@ -65,7 +65,12 @@ public class ProjectileController : MonoBehaviour
     {
         if(gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            collision.collider.gameObject.GetComponent<PlayerController>().changeHealth(-damage);
+            if (!collision.collider.gameObject.GetComponent<PlayerController>().getPlayerGotHit())
+            {
+                GameObject.Find("Player").GetComponent<PlayerController>().startGrace();
+                collision.collider.gameObject.GetComponent<PlayerController>().setPlayerGotHit(true);
+                collision.collider.gameObject.GetComponent<PlayerController>().changeHealth(-damage);
+            }
         }
         else if (gameObject.layer == LayerMask.NameToLayer("PlayerProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {

@@ -33,7 +33,10 @@ public class QuestController : MonoBehaviour
     [SerializeField]
     private List<AudioClip> adventureEndings;
 
-
+    // Good! You defended the chest! Lucky you, there was a potion there. Not that you really needed it, but here you go anyway!
+    // Similar with village ^^
+    // Well, you protected your chest, but don't really need the potions inside. Hmm... How about a different skin for your character? Yeah, that sounds good.
+    // Oh, you did it again. Well... Now you get the SUPER rare skin! Yeah... That's right. *cough*
 
     // Start is called before the first frame update
     void Start()
