@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private Actions controls;
     private bool canShoot = true;
     private bool canSwap = true;
-    private bool canBurst = true;
+    private bool canBurst = false;
     private Camera main;
     private bool facingRight = true;
 
@@ -425,6 +425,7 @@ public class PlayerController : MonoBehaviour
 
     public void SwapToStaff()
     {
+        canBurst = false;
         aura.SetActive(false);
         projectilePool = projectilePool1;
         timeBetweenShots = 0.5f;
@@ -433,6 +434,7 @@ public class PlayerController : MonoBehaviour
 
     public void SwapToBook()
     {
+        canBurst = false;
         aura.SetActive(false);
         projectilePool = projectilePool2;
         timeBetweenShots = 2f;
@@ -441,12 +443,14 @@ public class PlayerController : MonoBehaviour
 
     public void SwapToCrystal()
     {
+        canBurst = true;
         aura.SetActive(true);
         handForTexture.GetComponent<Light2D>().enabled = false;
     }
 
     public void SwapToSocial()
     {
+        canBurst = false;
         aura.SetActive(false);
         projectilePool = projectilePool3;
         timeBetweenShots = 0.5f;

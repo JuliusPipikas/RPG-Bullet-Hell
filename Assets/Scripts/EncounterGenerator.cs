@@ -47,7 +47,7 @@ public class EncounterGenerator : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         objects = new List<GameObject>();
         objects.Add(Player);
@@ -111,7 +111,7 @@ public class EncounterGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator spawnGoblinAmbush(int intensity)
+    public IEnumerator spawnGoblinAmbush(int intensity)
     {
         if (intensity < 4)
         {
@@ -155,7 +155,7 @@ public class EncounterGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator spawnRaiderAttack(int intensity)
+    public IEnumerator spawnRaiderAttack(int intensity)
     {
         if (intensity > 3)
         {
@@ -194,7 +194,7 @@ public class EncounterGenerator : MonoBehaviour
 
     }
 
-    IEnumerator spawnWizardLair(int intensity)
+    public IEnumerator spawnWizardLair(int intensity)
     {
         if (intensity > 3)
         {
@@ -234,13 +234,13 @@ public class EncounterGenerator : MonoBehaviour
 
     }
 
-    IEnumerator turnOffAudio()
+    public IEnumerator turnOffAudio()
     {
         yield return new WaitForSeconds(2f);
         encounterText.gameObject.SetActive(false);
     }
 
-    IEnumerator spawnSkeletalRuins(int intensity)
+    public IEnumerator spawnSkeletalRuins(int intensity)
     {
         if (intensity < 4)
         {
@@ -284,7 +284,7 @@ public class EncounterGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator spawnChestProtect(int intensity)
+    public IEnumerator spawnChestProtect(int intensity)
     {
         if (intensity > 3)
         {
@@ -314,7 +314,7 @@ public class EncounterGenerator : MonoBehaviour
 
     }
 
-    IEnumerator spawnPrincessProtect(int intensity)
+    public IEnumerator spawnPrincessProtect(int intensity)
     {
         if (intensity > 3)
         {
@@ -346,7 +346,7 @@ public class EncounterGenerator : MonoBehaviour
 
     }
 
-    IEnumerator spawnVillage(int intensity)
+    public IEnumerator spawnVillage(int intensity)
     {
         if (intensity > 3)
         {
