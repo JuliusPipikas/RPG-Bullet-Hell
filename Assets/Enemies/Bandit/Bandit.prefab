@@ -198,7 +198,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -252819899
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -408,6 +408,7 @@ MonoBehaviour:
   hand: {fileID: 5675371613015123276}
   movementVelocity: 2
   moveTowardsPlayer: 1
+  moveTowardsProtection: 0
   melee: 0
   meleeDistance: 0.5
   projectilePool: {fileID: 0}
@@ -430,7 +431,7 @@ MonoBehaviour:
   - {fileID: 5182346603733836655, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: -4294464135343857242, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
-  timeBetweenShots: 2
+  timeBetweenShots: 2.5
   shootingType: 3
   numberOfShots: 8
   distanceAngle: 30

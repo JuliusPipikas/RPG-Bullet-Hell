@@ -287,6 +287,170 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!43 &109343188
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 42
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 16
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 5, y: 5, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 00000100020003000100000003000400010005000400030006000400050004000600070002000800000000000900030001000a00020004000b00010003000c00050007000d00040005000e00060006000f000700
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 16
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 28
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 704
+    _typelessdata: 0000a0400000a04000000000000080bf0000008000000080000000800000a0400000a0400000a0400000a0400000a0400000a0c000000000000000800000803f00000080000000800000a0400000a0c00000a0400000a0c00000a0400000000000000000000080bf0000008000000080000000800000a0400000a0c00000a0400000a040000000000000a0400000000000000080000080bf00000000000000800000a0400000a0400000a0c00000a040000000000000a0c000000000000000800000803f00000080000000800000a0c00000a0c00000a0400000a0c00000a0c00000a0400000000000000080000080bf00000000000000800000a0c00000a0400000a0c00000a0400000a0c000000000000000000000803f0000008000000080000000800000a0c00000a0400000a0c00000a0c00000a0c00000a0c0000000000000803f0000008000000080000000800000a0c00000a0c00000a0c00000a0c00000a0400000000000000000000080bf0000008000000080000000800000a0400000a0c00000a0400000a0400000a0400000a0400000000000000080000080bf00000000000000800000a0400000a0400000a0400000a0400000a0400000a0c000000000000080bf0000008000000080000000800000a0400000a0c00000a0400000a0c0000000000000a0c000000000000000800000803f00000080000000800000a0c00000a0c00000a0400000a0c0000000000000a0400000000000000080000080bf00000000000000800000a0400000a0400000a0c00000a0400000a0c00000a0c000000000000000800000803f00000080000000800000a0c00000a0c00000a0c00000a0c00000a0c00000a040000000000000803f0000008000000080000000800000a0c00000a0400000a0c00000a0400000a0c000000000000000000000803f0000008000000080000000800000a0c00000a0400000a0c00000a0c0
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 5, y: 5, z: 0}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &139075777
 GameObject:
   m_ObjectHideFlags: 0
@@ -3171,9 +3335,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   adventureBeginningsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - Beginning 1
+  - Beginning 2
+  - Beginning 3
   goblinEncounterBeginnings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3182,12 +3346,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   goblinEncounterBeginningsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. Goblins 1
+  - I. Goblins 2
+  - II. FirstTimeGoblins
+  - II. SecondTimeGoblins
+  - III. FirstTimeGoblins
+  - IV. SecondOrThirdTimeGoblins
   goblinEncounterEndings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3196,12 +3360,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   goblinEncounterEndingsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. No damage
+  - I. Damage
+  - II. No damage
+  - II. Damage
+  - III. No damage
+  - III. Damage
   skeletonEncounterBeginnings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3210,12 +3374,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   skeletonEncounterBeginningsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. Skeletons 1
+  - I. Skeletons 2
+  - II. First time skellies
+  - II. Second time skellies
+  - III. First time skellies
+  - III. Second or thrid time skellies
   skeletonEncounterEndings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3224,12 +3388,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   skeletonEncounterEndingsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. No Damage
+  - I. Damage
+  - II. No damage
+  - II. Damage
+  - III. No damage
+  - III. Damage
   wizardEncounterBeginnings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3238,12 +3402,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   wizardEncounterBeginningsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. Wizard 1
+  - I. Wizard 2
+  - II. First wizard
+  - II. Second wizard
+  - III. First wizard
+  - II. Second / third wizard
   wizardEncounterEndings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3252,12 +3416,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   wizardEncounterEndingsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. No damage
+  - I. Damage
+  - II. No damage
+  - II. Damage
+  - III. No damage
+  - III. Damage
   raiderEncounterBeginnings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3266,12 +3430,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   raiderEncounterBeginningsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. Raiders 1
+  - I. Raiders 2
+  - II. First Raider
+  - II. Second raider
+  - III. First raider
+  - III. Second / third raider
   raiderEncounterEndings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3280,12 +3444,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   raiderEncounterEndingsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. No damage
+  - I. Damage
+  - II. No damage
+  - II. damage
+  - III. No damage
+  - III. Damage
   miscEncounterBeginnings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3295,15 +3459,21 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
+  - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
+  - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
+  - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   miscEncounterBeginningsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. Chest
+  - I. Princess
+  - I. Town
+  - II. First Chest After Social
+  - II. First Princess After Social
+  - II. Village
+  - II. (Chest/Princess) Last time protecting something went pretty well
+  - II. (Chest/Princess) Last time protecting something didn't go so good
+  - III. Village
+  - III. (Chest/Princess) Last time protecting something went pretty well
+  - III. (Chest/Princess) Last time protecting something didn't go so good
   miscEncounterEndings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3318,18 +3488,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   miscEncounterEndingsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. Chest No damage
+  - I. Chest Damage
+  - I. Princess No damage
+  - I. Princess Damage
+  - I. Village in time
+  - I. Village not in time
+  - II. Chest No damage
+  - II. Chest Damage
+  - II. Princess No damage
+  - II. Princess Damage
+  - II. Village in time
+  - II. Village not in time
   bossEncounterBeginning:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
@@ -3337,39 +3507,41 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   bossEncounterBeginningsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - Necromancer Boss (regular)
+  - Necromancer Boss (wizard and slimes)
+  - Goblin Boss (regular)
+  - Goblin Boss (raiders or goblins)
+  - Random Boss
   bossEncounterEndings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
+  - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   bossEncounterEndingsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - Necromancer Boss (regular)
+  - Necromancer Boss (wizard and slimes)
+  - Goblin Boss (regular)
+  - Goblin Boss (raiders or goblins)
+  - Random Boss
   levelUp:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   levelUpSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - I. Level 1
+  - I. Level 2
+  - II. Level 1
+  - II. Level 2
   adventureEndings:
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   - {fileID: 8300000, guid: f9182324a7d82e74ebbd2b6b5bb3eaa9, type: 3}
   adventureEndingsSub:
-  - PlaceHolder
-  - PlaceHolder
-  - PlaceHolder
+  - Ending 1 (perfect)
+  - Ending 2 (some failures)
+  - Ending 3 (all failures)
 --- !u!4 &1338536797
 Transform:
   m_ObjectHideFlags: 0
@@ -3781,170 +3953,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!43 &2029053391
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 42
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 16
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 5, y: 5, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 00000100020003000100000003000400010005000400030006000400050004000600070002000800000000000900030001000a00020004000b00010003000c00050007000d00040005000e00060006000f000700
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 16
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 28
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 704
-    _typelessdata: 0000a0400000a04000000000000080bf0000008000000080000000800000a0400000a0400000a0400000a0400000a0400000a0c000000000000000800000803f00000080000000800000a0400000a0c00000a0400000a0c00000a0400000000000000000000080bf0000008000000080000000800000a0400000a0c00000a0400000a040000000000000a0400000000000000080000080bf00000000000000800000a0400000a0400000a0c00000a040000000000000a0c000000000000000800000803f00000080000000800000a0c00000a0c00000a0400000a0c00000a0c00000a0400000000000000080000080bf00000000000000800000a0c00000a0400000a0c00000a0400000a0c000000000000000000000803f0000008000000080000000800000a0c00000a0400000a0c00000a0c00000a0c00000a0c0000000000000803f0000008000000080000000800000a0c00000a0c00000a0c00000a0c00000a0400000000000000000000080bf0000008000000080000000800000a0400000a0c00000a0400000a0400000a0400000a0400000000000000080000080bf00000000000000800000a0400000a0400000a0400000a0400000a0400000a0c000000000000080bf0000008000000080000000800000a0400000a0c00000a0400000a0c0000000000000a0c000000000000000800000803f00000080000000800000a0c00000a0c00000a0400000a0c0000000000000a0400000000000000080000080bf00000000000000800000a0400000a0400000a0c00000a0400000a0c00000a0c000000000000000800000803f00000080000000800000a0c00000a0c00000a0c00000a0c00000a0c00000a040000000000000803f0000008000000080000000800000a0c00000a0400000a0c00000a0400000a0c000000000000000000000803f0000008000000080000000800000a0c00000a0400000a0c00000a0c0
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 5, y: 5, z: 0}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!4 &2030365196 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408978541960458115, guid: 139cd90ed39f50f4c872f85937d42b68, type: 3}

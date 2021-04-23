@@ -103,13 +103,14 @@ MonoBehaviour:
   hand: {fileID: 3127325867342061543}
   movementVelocity: 1
   moveTowardsPlayer: 1
+  moveTowardsProtection: 0
   melee: 1
   meleeDistance: 3
   projectilePool: {fileID: 0}
   stopTime: 0.2
   allocatedWalkTime: 2
   movementVariant: 1
-  maxHealth: 20
+  maxHealth: 15
   facingRight: 1
   healthBar: {fileID: 5926760892224005939}
   healthBarOffset: 0.35

@@ -47,7 +47,7 @@ public class EncounterGenerator : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void Awake() 
     {
         objects = new List<GameObject>();
         objects.Add(Player);
@@ -143,7 +143,7 @@ public class EncounterGenerator : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         if (intensity < 4)
         {
-            for (int i = 0; i < 2 * intensity; i++)
+            for (int i = 0; i < Mathf.RoundToInt(1.5f * intensity); i++)
             {
                 PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
                 PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
@@ -178,12 +178,16 @@ public class EncounterGenerator : MonoBehaviour
         int t = 1;
         if (intensity == 0) t = 0;
 
-        for (int i = 0; i < 1*t + intensity; i++)
+        for (int i = 0; i < Mathf.RoundToInt(0.5f*t) + intensity; i++)
+        {
+            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
+        }
+        if(intensity <= 2)
         {
             PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
         }
 
-        if(intensity == 2)
+        if(intensity >= 2)
         {
             PlaceEnemyInFreeSpot("BanditLeader", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             if (intensity == 3)
@@ -272,7 +276,7 @@ public class EncounterGenerator : MonoBehaviour
 
         if (intensity < 4)
         {
-            for (int i = 0; i < 2 * intensity; i++)
+            for (int i = 0; i < Mathf.RoundToInt(1f * intensity); i++)
             {
                 PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
                 PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
@@ -309,7 +313,7 @@ public class EncounterGenerator : MonoBehaviour
 
         for (int i = 0; i < intensity; i++)
         {
-            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 30, true, Shovable);
+            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 15, true, Shovable);
         }
 
     }
@@ -337,13 +341,21 @@ public class EncounterGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        for (int i = 0; i < intensity; i++)
+        if (intensity >= 1)
         {
             PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, true, Shovable);
             PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
         }
-
+        if(intensity >= 2)
+        {
+            PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
+            PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
+        }
+        if(intensity >= 3)
+        {
+            PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, true, Shovable);
+        }
     }
 
     public IEnumerator spawnVillage(int intensity)
@@ -352,6 +364,9 @@ public class EncounterGenerator : MonoBehaviour
         {
             intensity = 3;
         }
+
+        Player.GetComponent<PlayerController>().SwapWeapon(6);
+        Player.GetComponent<PlayerController>().canSwap = false;
 
         encounterText.text = "Socialize!";
 

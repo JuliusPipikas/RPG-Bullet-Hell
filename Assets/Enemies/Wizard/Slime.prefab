@@ -198,7 +198,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -252819899
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5213,13 +5213,14 @@ MonoBehaviour:
   hand: {fileID: 5715366529076275031}
   movementVelocity: 0.5
   moveTowardsPlayer: 0
+  moveTowardsProtection: 0
   melee: 0
   meleeDistance: 0.5
   projectilePool: {fileID: 0}
   stopTime: 0.5
   allocatedWalkTime: 2
   movementVariant: 1
-  maxHealth: 10
+  maxHealth: 7
   facingRight: 1
   healthBar: {fileID: 4230011594784188320}
   healthBarOffset: 0.15

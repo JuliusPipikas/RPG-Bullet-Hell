@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private Actions controls;
     private bool canShoot = true;
-    private bool canSwap = true;
+    public bool canSwap = true;
     private bool canBurst = false;
     private Camera main;
     private bool facingRight = true;
@@ -67,6 +67,11 @@ public class PlayerController : MonoBehaviour
     {
         controls = new Actions();
         projectilePool = projectilePool1;
+    }
+
+    public int getHealth()
+    {
+        return health;
     }
 
     private void OnEnable()
@@ -404,8 +409,10 @@ public class PlayerController : MonoBehaviour
             aura.GetComponent<Light2D>().intensity += 0.1f;
             yield return new WaitForSeconds(0.05f);
         }
-        
-        canBurst = true;
+        if (currentWeapon == 2)
+        {
+            canBurst = true;
+        }
     }
 
     private void Burst()

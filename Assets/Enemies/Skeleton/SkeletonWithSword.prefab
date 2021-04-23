@@ -103,13 +103,14 @@ MonoBehaviour:
   hand: {fileID: 3622928566260336045}
   movementVelocity: 1
   moveTowardsPlayer: 1
+  moveTowardsProtection: 0
   melee: 1
   meleeDistance: 2
   projectilePool: {fileID: 0}
   stopTime: 0.2
   allocatedWalkTime: 2
   movementVariant: 1
-  maxHealth: 6
+  maxHealth: 5
   facingRight: 1
   healthBar: {fileID: 5431712485779455353}
   healthBarOffset: 0.3
@@ -334,7 +335,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -252819899
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
