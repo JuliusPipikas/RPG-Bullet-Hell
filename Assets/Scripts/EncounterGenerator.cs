@@ -32,6 +32,8 @@ public class EncounterGenerator : MonoBehaviour
     private bool chestSpawnTest = false;
     [SerializeField]
     private bool princessSpawnTest = false;
+    [SerializeField]
+    private bool villageSpawnTest = false;
 
     [SerializeField]
     private List<AudioClip> audioClips;
@@ -49,6 +51,11 @@ public class EncounterGenerator : MonoBehaviour
     {
         objects = new List<GameObject>();
         objects.Add(Player);
+    }
+
+    public List<GameObject> GetObjects()
+    {
+        return objects;
     }
 
     // Update is called once per frame
@@ -95,6 +102,12 @@ public class EncounterGenerator : MonoBehaviour
             StartCoroutine(spawnPrincessProtect(intensityTest));
 
             princessSpawnTest = false;
+        }
+        if (villageSpawnTest == true)
+        {
+            StartCoroutine(spawnVillage(intensityTest));
+
+            villageSpawnTest = false;
         }
     }
 
@@ -333,6 +346,34 @@ public class EncounterGenerator : MonoBehaviour
 
     }
 
+    IEnumerator spawnVillage(int intensity)
+    {
+        if (intensity > 3)
+        {
+            intensity = 3;
+        }
+
+        encounterText.text = "Socialize!";
+
+        encounterText.gameObject.SetActive(true);
+
+        StartCoroutine(turnOffAudio());
+
+        for (int i = 0; i < 4 * intensity; i++)
+        {
+            PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        for (int i = 0; i < intensity*5; i++)
+        {
+            int rand = Random.Range(1, 5);
+            PlaceVillagerInSpreeSpot("Villager" + rand.ToString(), 0.3f, 0f, maxRadius, Vector2.zero);
+        }
+
+    }
+
     public void PlaceEnemyInFreeSpot(string name, float rangeDistance, float spawnRadiusMin, float spawnRadius, Vector2 offset, int customHP, bool towardsProtection, GameObject protection)
     {
         bool foundFreeSpot = false;
@@ -468,6 +509,57 @@ public class EncounterGenerator : MonoBehaviour
             {
                 Shovable = ef.SpawnShovable(name, spawnPos.x, spawnPos.y);
                 objects.Add(Shovable);
+            }
+
+        }
+    }
+
+    public void PlaceVillagerInSpreeSpot(string name, float rangeDistance, float spawnRadiusMin, float spawnRadius, Vector2 offset)
+    {
+        bool foundFreeSpot = false;
+
+        while (foundFreeSpot == false)
+        {
+            foundFreeSpot = true;
+
+            float radians = Random.Range(0, 360) * Mathf.Deg2Rad;
+            if (spawnRadius > maxRadius)
+            {
+                spawnRadius = maxRadius;
+            }
+            float radius = Random.Range(spawnRadiusMin, spawnRadius);
+            Vector2 spawnPos = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius;
+
+            int ind = 0;
+
+            foreach (GameObject objs in objects)
+            {
+                if (objs != null)
+                {
+                    Transform tr = objs.transform;
+                    float distance = Vector2.Distance(spawnPos, tr.position);
+
+                    if (ind == 0)
+                    {
+                        if (distance < rangeDistance + 1f)
+                        {
+                            foundFreeSpot = false;
+                        }
+                    }
+                    else
+                    {
+                        if (distance < rangeDistance)
+                        {
+                            foundFreeSpot = false;
+                        }
+                    }
+                }
+                ind++;
+            }
+
+            if (foundFreeSpot)
+            {
+                objects.Add(ef.SpawnVillager(name, spawnPos.x, spawnPos.y));
             }
 
         }

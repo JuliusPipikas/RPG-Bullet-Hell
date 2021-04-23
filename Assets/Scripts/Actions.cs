@@ -41,6 +41,46 @@ public class @Actions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwapWeapons1"",
+                    ""type"": ""Button"",
+                    ""id"": ""8856dd2c-f304-4907-887f-6ff88c571e0d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwapWeapons2"",
+                    ""type"": ""Button"",
+                    ""id"": ""6239c8ec-08f3-45fb-86b4-00d7b0e9cb13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwapWeapons3"",
+                    ""type"": ""Button"",
+                    ""id"": ""ebb8e5e2-d335-4317-b339-bb37a1c2245c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""111f81dd-fbf2-4504-9652-15255a37289f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Previous"",
+                    ""type"": ""Button"",
+                    ""id"": ""b87ca0b5-da99-4053-8acd-919aefda7e3f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -120,6 +160,61 @@ public class @Actions : IInputActionCollection, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4c06e38-911d-44b9-8605-24b534e2426c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapWeapons1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91cb2753-99e7-495f-9697-53df9d570372"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapWeapons2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25797b8a-d36f-4857-b367-3477b536fe8b"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapWeapons3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d435859-ecf6-4a19-a654-fd73a68ced27"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e68a0dd-1aa2-4472-8daf-5ffd9ed208cb"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Previous"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -131,6 +226,11 @@ public class @Actions : IInputActionCollection, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_SwapWeapons1 = m_Player.FindAction("SwapWeapons1", throwIfNotFound: true);
+        m_Player_SwapWeapons2 = m_Player.FindAction("SwapWeapons2", throwIfNotFound: true);
+        m_Player_SwapWeapons3 = m_Player.FindAction("SwapWeapons3", throwIfNotFound: true);
+        m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
+        m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,6 +283,11 @@ public class @Actions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_SwapWeapons1;
+    private readonly InputAction m_Player_SwapWeapons2;
+    private readonly InputAction m_Player_SwapWeapons3;
+    private readonly InputAction m_Player_Next;
+    private readonly InputAction m_Player_Previous;
     public struct PlayerActions
     {
         private @Actions m_Wrapper;
@@ -190,6 +295,11 @@ public class @Actions : IInputActionCollection, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @SwapWeapons1 => m_Wrapper.m_Player_SwapWeapons1;
+        public InputAction @SwapWeapons2 => m_Wrapper.m_Player_SwapWeapons2;
+        public InputAction @SwapWeapons3 => m_Wrapper.m_Player_SwapWeapons3;
+        public InputAction @Next => m_Wrapper.m_Player_Next;
+        public InputAction @Previous => m_Wrapper.m_Player_Previous;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -208,6 +318,21 @@ public class @Actions : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @SwapWeapons1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons1;
+                @SwapWeapons1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons1;
+                @SwapWeapons1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons1;
+                @SwapWeapons2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons2;
+                @SwapWeapons2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons2;
+                @SwapWeapons2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons2;
+                @SwapWeapons3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons3;
+                @SwapWeapons3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons3;
+                @SwapWeapons3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwapWeapons3;
+                @Next.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNext;
+                @Next.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNext;
+                @Next.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNext;
+                @Previous.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrevious;
+                @Previous.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrevious;
+                @Previous.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrevious;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -221,6 +346,21 @@ public class @Actions : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @SwapWeapons1.started += instance.OnSwapWeapons1;
+                @SwapWeapons1.performed += instance.OnSwapWeapons1;
+                @SwapWeapons1.canceled += instance.OnSwapWeapons1;
+                @SwapWeapons2.started += instance.OnSwapWeapons2;
+                @SwapWeapons2.performed += instance.OnSwapWeapons2;
+                @SwapWeapons2.canceled += instance.OnSwapWeapons2;
+                @SwapWeapons3.started += instance.OnSwapWeapons3;
+                @SwapWeapons3.performed += instance.OnSwapWeapons3;
+                @SwapWeapons3.canceled += instance.OnSwapWeapons3;
+                @Next.started += instance.OnNext;
+                @Next.performed += instance.OnNext;
+                @Next.canceled += instance.OnNext;
+                @Previous.started += instance.OnPrevious;
+                @Previous.performed += instance.OnPrevious;
+                @Previous.canceled += instance.OnPrevious;
             }
         }
     }
@@ -230,5 +370,10 @@ public class @Actions : IInputActionCollection, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnSwapWeapons1(InputAction.CallbackContext context);
+        void OnSwapWeapons2(InputAction.CallbackContext context);
+        void OnSwapWeapons3(InputAction.CallbackContext context);
+        void OnNext(InputAction.CallbackContext context);
+        void OnPrevious(InputAction.CallbackContext context);
     }
 }

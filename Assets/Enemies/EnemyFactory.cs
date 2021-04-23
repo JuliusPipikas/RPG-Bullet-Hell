@@ -89,4 +89,23 @@ public class EnemyFactory : MonoBehaviour
         }
         return null;
     }
+
+    public GameObject SpawnVillager(string name, float x, float y)
+    {
+        for (int i = 0; i < villagers.Length; i++)
+        {
+            if (villagers[i].name == name)
+            {
+                Vector3 pos = new Vector3(x, y, 0);
+                GameObject villager = Instantiate(villagers[i], pos, Quaternion.identity);
+                GameObject spawn = Instantiate(spawnPoof, pos, Quaternion.identity);
+
+                Destroy(spawn, 0.3f);
+
+                villager.GetComponent<VillagerController>().spawnPoof = spawnPoof;
+                return villager;
+            }
+        }
+        return null;
+    }
 }

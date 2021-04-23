@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4408978541440573853}
   - component: {fileID: 4408978541440573850}
+  - component: {fileID: 1486888006}
   m_Layer: 12
   m_Name: Square
   m_TagString: Untagged
@@ -82,6 +83,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1486888006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4408978541440573852}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.5
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: bd8aa6d600000000ddf796ecc1a738b359919fb24546eef087bad024c5a54447916fad1e
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 0.2
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &4408978541459380662
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,11 +257,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileDirection: {fileID: 4408978542115582576}
   hand: {fileID: 4408978541459380662}
+  aura: {fileID: 0}
   movementVelocity: 1.5
-  projectilePool: {fileID: 0}
+  projectilePool1: {fileID: 0}
+  projectilePool2: {fileID: 0}
+  projectilePool3: {fileID: 0}
   timeBetweenShots: 0.5
   maxHealth: 10
   healthBar: {fileID: 0}
+  swapBar: {fileID: 0}
   healthbarSprites:
   - {fileID: 6231081168062819109, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: 7328776184394636782, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
@@ -232,6 +278,24 @@ MonoBehaviour:
   - {fileID: 5182346603733836655, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: -4294464135343857242, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  swapbarSprites:
+  - {fileID: -793853672561180757, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 2768761130950307267, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 5527450087285803020, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: -586596019674176290, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 5368809376634231135, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: -7298682439196863302, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 8862432624271434952, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 4346836856989966536, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: -9154066496747031440, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 838381206715371526, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: -6276429844018924380, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  handForTexture: {fileID: 4408978541440573852}
+  weaponTextures:
+  - {fileID: -96796154962138083, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: -7054820123952135176, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 4530623484691778272, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
+  - {fileID: 8636805145482191278, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
 --- !u!50 &4408978541960458116
 Rigidbody2D:
   serializedVersion: 4

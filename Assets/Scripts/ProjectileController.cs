@@ -86,6 +86,10 @@ public class ProjectileController : MonoBehaviour
         {
             collision.collider.gameObject.GetComponent<ProtectController>().changeHealth(-damage);
         }
+        else if (gameObject.layer == LayerMask.NameToLayer("PlayerProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("Villager"))
+        {
+            collision.collider.gameObject.GetComponent<VillagerController>().changeHealth(-damage);
+        }
         else if (gameObject.layer == LayerMask.NameToLayer("PlayerProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("ShovableObject"))
         {
             t = true;
