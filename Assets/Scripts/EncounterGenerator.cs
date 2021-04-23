@@ -28,6 +28,10 @@ public class EncounterGenerator : MonoBehaviour
     private bool raiderSpawnTest = false;
     [SerializeField]
     private bool wizardSpawnTest = false;
+    [SerializeField]
+    private bool chestSpawnTest = false;
+    [SerializeField]
+    private bool princessSpawnTest = false;
 
     [SerializeField]
     private List<AudioClip> audioClips;
@@ -36,6 +40,8 @@ public class EncounterGenerator : MonoBehaviour
     private Text encounterText;
 
     private float maxRadius = 3.5f;
+
+    private GameObject Shovable;
 
 
     // Start is called before the first frame update
@@ -78,6 +84,18 @@ public class EncounterGenerator : MonoBehaviour
 
             wizardSpawnTest = false;
         }
+        if (chestSpawnTest == true)
+        {
+            StartCoroutine(spawnChestProtect(intensityTest));
+
+            chestSpawnTest = false;
+        }
+        if (princessSpawnTest == true)
+        {
+            StartCoroutine(spawnPrincessProtect(intensityTest));
+
+            princessSpawnTest = false;
+        }
     }
 
     IEnumerator spawnGoblinAmbush(int intensity)
@@ -114,13 +132,13 @@ public class EncounterGenerator : MonoBehaviour
         {
             for (int i = 0; i < 2 * intensity; i++)
             {
-                PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero);
-                PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
+                PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
+                PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             }
         }
         else
         {
-            PlaceEnemyInFreeSpot("GoblinStack", 0.3f, 0.5f, maxRadius - 2, Vector2.zero);
+            PlaceEnemyInFreeSpot("GoblinStack", 0.3f, 0.5f, maxRadius - 2, Vector2.zero, 0, false, null);
         }
     }
 
@@ -149,15 +167,15 @@ public class EncounterGenerator : MonoBehaviour
 
         for (int i = 0; i < 1*t + intensity; i++)
         {
-            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
         }
 
         if(intensity == 2)
         {
-            PlaceEnemyInFreeSpot("BanditLeader", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            PlaceEnemyInFreeSpot("BanditLeader", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             if (intensity == 3)
             {
-                PlaceEnemyInFreeSpot("BanditLeader", 0.3f, 0.5f, maxRadius, Vector2.zero);
+                PlaceEnemyInFreeSpot("BanditLeader", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             }
         }
 
@@ -187,16 +205,16 @@ public class EncounterGenerator : MonoBehaviour
         {
             for (int i = 0; i < 2 * intensity; i++)
             {
-                PlaceEnemyInFreeSpot("Slime", 0.3f, 0.5f, maxRadius, Vector2.zero);
+                PlaceEnemyInFreeSpot("Slime", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             }
         }
         else
         {
             for (int i = 0; i < intensity; i++)
             {
-                PlaceEnemyInFreeSpot("Slime", 0.3f, 0.5f, maxRadius, Vector2.zero);
+                PlaceEnemyInFreeSpot("Slime", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             }
-            PlaceEnemyInFreeSpot("Wizard", 0.3f, 0.5f, maxRadius, Vector2.zero);
+            PlaceEnemyInFreeSpot("Wizard", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
         }
 
         
@@ -243,17 +261,79 @@ public class EncounterGenerator : MonoBehaviour
         {
             for (int i = 0; i < 2 * intensity; i++)
             {
-                PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, maxRadius, Vector2.zero);
-                PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero);
+                PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
+                PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
             }
         }
         else
         {
-            PlaceEnemyInFreeSpot("Necromancer", 0.3f, 0.5f, maxRadius-2, Vector2.zero);
+            PlaceEnemyInFreeSpot("Necromancer", 0.3f, 0.5f, maxRadius-2, Vector2.zero, 0, false, null);
         }
     }
 
-    public void PlaceEnemyInFreeSpot(string name, float rangeDistance, float spawnRadiusMin, float spawnRadius, Vector2 offset)
+    IEnumerator spawnChestProtect(int intensity)
+    {
+        if (intensity > 3)
+        {
+            intensity = 3;
+        }
+
+        encounterText.text = "Hand over ye goods!";
+
+        encounterText.gameObject.SetActive(true);
+
+        StartCoroutine(turnOffAudio());
+
+        PlaceShovableInFreeSpot("Chest", 0.3f, 0f, 1.5f, Vector2.zero);
+
+        for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
+        {
+            PlaceTerrainInFreeSpot("Plant", 1f, maxRadius, Vector2.zero);
+            PlaceTerrainInFreeSpot("Stone", 1f, maxRadius, Vector2.zero);
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        for (int i = 0; i < intensity; i++)
+        {
+            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 30, true, Shovable);
+        }
+
+    }
+
+    IEnumerator spawnPrincessProtect(int intensity)
+    {
+        if (intensity > 3)
+        {
+            intensity = 3;
+        }
+
+        encounterText.text = "Rescue her!";
+
+        encounterText.gameObject.SetActive(true);
+
+        StartCoroutine(turnOffAudio());
+
+        PlaceShovableInFreeSpot("Princess", 0.3f, 0f, 1.5f, Vector2.zero);
+
+        for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
+        {
+            PlaceTerrainInFreeSpot("Plant", 1f, maxRadius, Vector2.zero);
+            PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        for (int i = 0; i < intensity; i++)
+        {
+            PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
+            PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, true, Shovable);
+            PlaceEnemyInFreeSpot("GoblinWithSword", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
+        }
+
+    }
+
+    public void PlaceEnemyInFreeSpot(string name, float rangeDistance, float spawnRadiusMin, float spawnRadius, Vector2 offset, int customHP, bool towardsProtection, GameObject protection)
     {
         bool foundFreeSpot = false;
 
@@ -298,7 +378,7 @@ public class EncounterGenerator : MonoBehaviour
 
             if (foundFreeSpot)
             {
-                objects.Add(ef.SpawnEnemy(name, spawnPos.x, spawnPos.y));
+                objects.Add(ef.SpawnEnemy(name, spawnPos.x, spawnPos.y, customHP, towardsProtection, protection));
             }
 
         }
@@ -336,6 +416,58 @@ public class EncounterGenerator : MonoBehaviour
             if (foundFreeSpot)
             {
                 objects.Add(tc.SpawnTerrain(name, spawnPos.x, spawnPos.y));
+            }
+
+        }
+    }
+
+    public void PlaceShovableInFreeSpot(string name, float rangeDistance, float spawnRadiusMin, float spawnRadius, Vector2 offset)
+    {
+        bool foundFreeSpot = false;
+
+        while (foundFreeSpot == false)
+        {
+            foundFreeSpot = true;
+
+            float radians = Random.Range(0, 360) * Mathf.Deg2Rad;
+            if (spawnRadius > maxRadius)
+            {
+                spawnRadius = maxRadius;
+            }
+            float radius = Random.Range(spawnRadiusMin, spawnRadius);
+            Vector2 spawnPos = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius;
+
+            int ind = 0;
+
+            foreach (GameObject objs in objects)
+            {
+                if (objs != null)
+                {
+                    Transform tr = objs.transform;
+                    float distance = Vector2.Distance(spawnPos, tr.position);
+
+                    if (ind == 0)
+                    {
+                        if (distance < rangeDistance + 1f)
+                        {
+                            foundFreeSpot = false;
+                        }
+                    }
+                    else
+                    {
+                        if (distance < rangeDistance)
+                        {
+                            foundFreeSpot = false;
+                        }
+                    }
+                }
+                ind++;
+            }
+
+            if (foundFreeSpot)
+            {
+                Shovable = ef.SpawnShovable(name, spawnPos.x, spawnPos.y);
+                objects.Add(Shovable);
             }
 
         }

@@ -63,6 +63,8 @@ public class ProjectileController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        bool t = false;
+
         if(gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             if (!collision.collider.gameObject.GetComponent<PlayerController>().getPlayerGotHit())
@@ -80,8 +82,32 @@ public class ProjectileController : MonoBehaviour
         {
             collision.collider.gameObject.GetComponent<StackController>().changeHealth(-damage);
         }
+        else if (gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("ShovableObject"))
+        {
+            collision.collider.gameObject.GetComponent<ProtectController>().changeHealth(-damage);
+        }
+        else if (gameObject.layer == LayerMask.NameToLayer("PlayerProjectile") && collision.collider.gameObject.layer == LayerMask.NameToLayer("ShovableObject"))
+        {
+            t = true;
+        }
         GameObject spawn = Instantiate(spawnPoof, collision.contacts[0].point, transform.rotation*spawnPoof.transform.rotation);
         Destroy(spawn, 0.1f);
+        if (t)
+        {
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(waitForShove());
+            }
+        }
+        else
+        {
+            pool.ReturnObject(gameObject);
+        }
+    }
+
+    IEnumerator waitForShove()
+    {
+        yield return new WaitForSeconds(3f);
         pool.ReturnObject(gameObject);
     }
 }

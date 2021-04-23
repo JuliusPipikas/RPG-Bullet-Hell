@@ -21,7 +21,7 @@ TagManager:
   - CharacterFeet
   - ArenaWalls
   - EnemyStack
-  - 
+  - ShovableObject
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3006834625
+    locked: 0
+  - name: ShovableObject
+    uniqueID: 2968134863
     locked: 0
   - name: Player
     uniqueID: 2996801881

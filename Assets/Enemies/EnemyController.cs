@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField]
     private bool moveTowardsPlayer = false;
+    [SerializeField]
+    private bool moveTowardsProtection = false;
 
     [SerializeField]
     private bool melee = false;
@@ -99,6 +101,7 @@ public class EnemyController : MonoBehaviour
     public GameObject spawnPoof;
 
     private bool canSequence = true;
+    private GameObject Protection;
 
     private void Awake()
     {
@@ -112,6 +115,16 @@ public class EnemyController : MonoBehaviour
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
+    }
+
+    public void setProtection(GameObject go)
+    {
+        Protection = go;
+    }
+
+    public void setMoveTowardsProtection(bool b)
+    {
+        moveTowardsProtection = b;
     }
 
     private void Shoot()
@@ -151,7 +164,18 @@ public class EnemyController : MonoBehaviour
                 {
                     angleIndex = -Mathf.FloorToInt(numberOfShots / 2);
                 }
-                float targetAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+
+                float targetAngle;
+
+                if (!moveTowardsProtection)
+                {
+                    targetAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+                }
+                else
+                {
+                    targetAngle = Mathf.Atan2(Protection.transform.position.y - hand.transform.position.y, Protection.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+                }
+
 
                 if (targetAngle < 0)
                 {
@@ -186,7 +210,16 @@ public class EnemyController : MonoBehaviour
                 StartCoroutine(CanShoot());
 
                 float angleChange = 360 / numberOfShots;
-                float startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+
+                float startAngle;
+                if (!moveTowardsProtection)
+                {
+                    startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+                }
+                else
+                {
+                    startAngle = Mathf.Atan2(Protection.transform.position.y - hand.transform.position.y, Protection.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+                }
                 float incrementAngle = 0;
 
                 if (startAngle < 0)
@@ -226,7 +259,17 @@ public class EnemyController : MonoBehaviour
         GameObject[] prj = new GameObject[(int)Mathf.Floor(numberOfShots * numberOfSpins)];
 
         float angleChange = 360 / numberOfShots;
-        float startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+
+        float startAngle;
+
+        if (!moveTowardsProtection)
+        {
+            startAngle = Mathf.Atan2(player.transform.position.y - hand.transform.position.y, player.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+        }
+        else
+        {
+            startAngle = Mathf.Atan2(Protection.transform.position.y - hand.transform.position.y, Protection.transform.position.x - hand.transform.position.x) * Mathf.Rad2Deg;
+        }
         float incrementAngle = 0;
 
         if (startAngle < 0)
@@ -296,11 +339,11 @@ public class EnemyController : MonoBehaviour
 
             if (rand == 0)
             {
-                eg.PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, 3.5f, Vector2.zero);
+                eg.PlaceEnemyInFreeSpot("Skeleton", 0.3f, 0.5f, 3.5f, Vector2.zero, 0, false, null);
             }
             else
             {
-                eg.PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, 3.5f, Vector2.zero);
+                eg.PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, 3.5f, Vector2.zero, 0, false, null);
             }
 
             yield return new WaitForSeconds(3);
@@ -331,8 +374,26 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+
+        Vector3 targetPosition;
+
         // Sets the target position of the projectile to the player's current position/
-        Vector3 targetPosition = player.transform.position;
+        if (!moveTowardsProtection)
+        {
+            targetPosition = player.transform.position;
+        }
+        else
+        {
+            if (Protection)
+            {
+                targetPosition = Protection.transform.position;
+            }
+            else
+            {
+                moveTowardsPlayer = false;
+                targetPosition = player.transform.position;
+            }
+        }
 
         // Calculates the target (player) direction according to current facing.
         Vector3 targetDirection;
@@ -498,6 +559,7 @@ public class EnemyController : MonoBehaviour
     public void setMaxHealth(int amount)
     {
         maxHealth = amount;
+        health = amount;
     }
 
     IEnumerator flashWhite()

@@ -20,7 +20,7 @@ public class TerrainInteractions : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("ShovableObject"))
         {
             collission_count++;
             gameObject.GetComponent<SpriteRenderer>().material = transparentMaterial;
@@ -32,7 +32,7 @@ public class TerrainInteractions : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("ShovableObject"))
         {
             collission_count--;
             if (collission_count == 0)
