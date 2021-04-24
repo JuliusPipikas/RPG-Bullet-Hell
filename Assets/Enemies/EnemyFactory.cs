@@ -90,7 +90,7 @@ public class EnemyFactory : MonoBehaviour
         return null;
     }
 
-    public GameObject SpawnVillager(string name, float x, float y)
+    public GameObject SpawnVillager(string name, float x, float y, int intensity)
     {
         for (int i = 0; i < villagers.Length; i++)
         {
@@ -103,6 +103,7 @@ public class EnemyFactory : MonoBehaviour
                 Destroy(spawn, 0.3f);
 
                 villager.GetComponent<VillagerController>().spawnPoof = spawnPoof;
+                villager.GetComponent<VillagerController>().changeMoveIntensity(intensity);
                 return villager;
             }
         }

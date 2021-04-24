@@ -37,6 +37,7 @@ public class VillagerController : MonoBehaviour
     private Vector3 walkPosition = Vector3.zero;
     private bool firstTimeMove = true;
     private float angle;
+    
 
     private Vector2 collissionPoint;
 
@@ -50,6 +51,12 @@ public class VillagerController : MonoBehaviour
         shaderSpritesDefault = Shader.Find("Sprites/Default");
 
         randMovementOffset = Random.Range(0, 200) / 100;
+    }
+
+    public void changeMoveIntensity(int intensity)
+    {
+        movementVelocity *= intensity;
+        stopTime /= intensity;
     }
 
     public void changeHealth(int amount)

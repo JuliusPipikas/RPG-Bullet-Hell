@@ -34,7 +34,10 @@ public class ProjectileController : MonoBehaviour
         {
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
         }
-        StartCoroutine(EnableCollirAfterTime());
+        if (!gameObject.name.Contains("Player"))
+        {
+            StartCoroutine(EnableCollirAfterTime());
+        }
     }
 
     IEnumerator DestroyProjectileAfterTime()

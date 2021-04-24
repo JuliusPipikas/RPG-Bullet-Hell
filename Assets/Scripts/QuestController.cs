@@ -14,7 +14,17 @@ public class QuestController : MonoBehaviour
     private GameObject subtitles;
 
     [SerializeField]
+    private GameObject counter;
+    [SerializeField]
+    private GameObject villagersLeft;
+
+    [SerializeField]
     private EncounterGenerator EG;
+
+    [SerializeField]
+    private GameObject spawnPoof;
+    [SerializeField]
+    private GameObject healUp;
 
     [SerializeField]
     private List<AudioClip> adventureBeginnings; //(in case you don't know how to control your character, guess you'll have to lose and check out the Main Menu again!)
@@ -111,6 +121,12 @@ public class QuestController : MonoBehaviour
     private int playerHPBefore;
     private bool inTime = true;
     private int timesFailedPrior;
+    private int villCnt = 0;
+    private bool currentlyDeleting = false;
+
+    [SerializeField]
+    private List<GameObject> PlayerLevels = new List<GameObject>();
+
     void Start()
     {
         visited = new List<int>();
@@ -129,7 +145,7 @@ public class QuestController : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             playerHPBefore = GameObject.Find("Player").GetComponent<PlayerController>().getHealth();
-            timesFailedPrior = timesFailedToSave;
+            
             while (true)
             {
                 rand = Random.Range(0, 7);
@@ -138,6 +154,14 @@ public class QuestController : MonoBehaviour
                 {
                     if (rand >= 4)
                     {
+                        if(rand == 6)
+                        {
+                            timesFailedPrior = timesFailedToSocialize;
+                        }
+                        else
+                        {
+                            timesFailedPrior = timesFailedToSave;
+                        }
                         visitedPermanent.Add(rand);
                         visited.Add(4);
                         visited.Add(5);
@@ -166,7 +190,7 @@ public class QuestController : MonoBehaviour
             StartCoroutine(findEndAudio(rand, 1)); 
             yield return new WaitForSeconds(clipLength);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.5f);
         }
 
         if (!lost) StartCoroutine(Mid());
@@ -177,12 +201,21 @@ public class QuestController : MonoBehaviour
         yield return null;
         StartCoroutine(findStartAudio(8, 1));
         yield return new WaitForSeconds(clipLength);
+        PlayerLevels[0].GetComponent<SpriteRenderer>().sprite = PlayerLevels[1].GetComponent<SpriteRenderer>().sprite;
+        PlayerLevels[0].GetComponents<CapsuleCollider2D>()[0] = PlayerLevels[1].GetComponents<CapsuleCollider2D>()[0];
+        PlayerLevels[0].GetComponents<CapsuleCollider2D>()[1] = PlayerLevels[1].GetComponents<CapsuleCollider2D>()[1];
+        PlayerLevels[0].transform.GetChild(0).GetComponents<CapsuleCollider2D>()[0] = PlayerLevels[1].transform.GetChild(0).GetComponent<CapsuleCollider2D>();
+        PlayerLevels[0].transform.GetChild(1).transform.localScale = PlayerLevels[1].transform.GetChild(1).transform.localScale;
+        GameObject spawn = Instantiate(spawnPoof, PlayerLevels[0].transform.position, Quaternion.identity);
+        PlayerLevels[0].GetComponent<PlayerController>().movementVelocity += 0.3f;
         visited.Clear();
+
+        yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < 3; i++)
         {
             playerHPBefore = GameObject.Find("Player").GetComponent<PlayerController>().getHealth();
-            timesFailedPrior = timesFailedToSave;
+
             while (true)
             {
                 rand = Random.Range(0, 7);
@@ -191,6 +224,14 @@ public class QuestController : MonoBehaviour
                 {
                     if (rand >= 4)
                     {
+                        if (rand == 6)
+                        {
+                            timesFailedPrior = timesFailedToSocialize;
+                        }
+                        else
+                        {
+                            timesFailedPrior = timesFailedToSave;
+                        }
                         visitedPermanent.Add(rand);
                         visited.Add(4);
                         visited.Add(5);
@@ -204,7 +245,7 @@ public class QuestController : MonoBehaviour
                 }
             }
 
-            yield return null;
+            canContinue = false;
             StartCoroutine(findStartAudio(rand, 2));
             yield return new WaitForSeconds(clipLength);
 
@@ -215,11 +256,14 @@ public class QuestController : MonoBehaviour
             canContinue = false;
             while (!canContinue) yield return null;
 
+            canContinue = false;
             StartCoroutine(findEndAudio(rand, 2));
             yield return new WaitForSeconds(clipLength);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.5f);
         }
+
+        while (!canContinue) yield return null;
 
         if (!lost) StartCoroutine(Finale());
     }
@@ -229,12 +273,21 @@ public class QuestController : MonoBehaviour
         yield return null;
         StartCoroutine(findStartAudio(8, 2));
         yield return new WaitForSeconds(clipLength);
+        PlayerLevels[0].GetComponent<SpriteRenderer>().sprite = PlayerLevels[2].GetComponent<SpriteRenderer>().sprite;
+        PlayerLevels[0].GetComponents<CapsuleCollider2D>()[0] = PlayerLevels[2].GetComponents<CapsuleCollider2D>()[0];
+        PlayerLevels[0].GetComponents<CapsuleCollider2D>()[1] = PlayerLevels[2].GetComponents<CapsuleCollider2D>()[1];
+        PlayerLevels[0].transform.GetChild(0).GetComponents<CapsuleCollider2D>()[0] = PlayerLevels[2].transform.GetChild(0).GetComponent<CapsuleCollider2D>();
+        PlayerLevels[0].transform.GetChild(1).transform.localScale = PlayerLevels[2].transform.GetChild(1).transform.localScale;
+        GameObject spawn = Instantiate(spawnPoof, PlayerLevels[0].transform.position, Quaternion.identity);
+        PlayerLevels[0].GetComponent<PlayerController>().movementVelocity += 0.3f;
         visited.Clear();
+
+        yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < 3; i++)
         {
             playerHPBefore = GameObject.Find("Player").GetComponent<PlayerController>().getHealth();
-            timesFailedPrior = timesFailedToSave;
+
             while (true)
             {
                 rand = Random.Range(0, 7);
@@ -243,6 +296,14 @@ public class QuestController : MonoBehaviour
                 {
                     if (rand >= 4)
                     {
+                        if (rand == 6)
+                        {
+                            timesFailedPrior = timesFailedToSocialize;
+                        }
+                        else
+                        {
+                            timesFailedPrior = timesFailedToSave;
+                        }
                         visitedPermanent.Add(rand);
                         visited.Add(4);
                         visited.Add(5);
@@ -256,7 +317,7 @@ public class QuestController : MonoBehaviour
                 }
             }
 
-            yield return null;
+            canContinue = false;
             StartCoroutine(findStartAudio(rand, 3));
             yield return new WaitForSeconds(clipLength);
 
@@ -267,11 +328,14 @@ public class QuestController : MonoBehaviour
             canContinue = false;
             while (!canContinue) yield return null;
 
+            canContinue = false;
             StartCoroutine(findEndAudio(rand, 3));
             yield return new WaitForSeconds(clipLength);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.5f);
         }
+
+        while (!canContinue) yield return null;
 
         if (!lost)
         {
@@ -297,7 +361,7 @@ public class QuestController : MonoBehaviour
                 yield return new WaitForSeconds(clipLength);
                 yield return Encounter(4, rand1);
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2.5f);
             StartCoroutine(check(rand));
             canContinue = false;
             while (!canContinue) yield return null;
@@ -309,7 +373,7 @@ public class QuestController : MonoBehaviour
             StartCoroutine(findEndAudio(7, 3));
             yield return new WaitForSeconds(clipLength);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             canContinue = false;
             StartCoroutine(findStartAudio(9, 3));
@@ -357,9 +421,40 @@ public class QuestController : MonoBehaviour
                 break;
             case 6:
                 StartCoroutine(EG.spawnVillage(intensity));
+                counter.SetActive(true);
+                villagersLeft.SetActive(true);
+                counter.GetComponent<Text>().text = "15";
+                villagersLeft.GetComponent<Text>().text = "5/5";
+                StartCoroutine(villageEncounterTracker());
                 break;
         }
         return null;
+    }
+
+    IEnumerator villageEncounterTracker()
+    {
+        yield return null;
+        int cnt = 15;
+        yield return new WaitForSeconds(2.5f);
+
+        canContinue = false;
+        while (!canContinue)
+        {
+            yield return null;
+            yield return new WaitForSeconds(1f);
+            cnt--;
+            counter.GetComponent<Text>().text = cnt.ToString();
+            if(cnt == 0)
+            {
+                timesFailedToSocialize++;
+                GameObject.Find("Player").GetComponent<PlayerController>().SwapWeapon(1);
+                GameObject.Find("Player").GetComponent<PlayerController>().canSwap = true;
+                counter.SetActive(false);
+                villagersLeft.SetActive(false);
+                StartCoroutine(EG.Despawn());
+                canContinue = true;
+            }
+        }
     }
 
     IEnumerator findStartAudio(int index, int stage)
@@ -537,7 +632,7 @@ public class QuestController : MonoBehaviour
             }
             else if (stage == 2)
             {
-                if (timesFacedVillage == 1)
+                if (timesFacedProtection == 0)
                 {
                     StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[3], miscEncounterBeginnings[3]));
                     clipLength = miscEncounterBeginnings[3].length;
@@ -561,17 +656,26 @@ public class QuestController : MonoBehaviour
             }
             else
             {
-                if (timesFailedToSave == 0)
+                if (timesFacedProtection == 0)
                 {
-                    StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[9], miscEncounterBeginnings[9]));
-                    clipLength = miscEncounterBeginnings[9].length;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[3], miscEncounterBeginnings[3]));
+                    clipLength = miscEncounterBeginnings[3].length;
                     canContinue = true;
                 }
                 else
                 {
-                    StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[10], miscEncounterBeginnings[10]));
-                    clipLength = miscEncounterBeginnings[10].length;
-                    canContinue = true;
+                    if (timesFailedToSave == 0)
+                    {
+                        StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[9], miscEncounterBeginnings[9]));
+                        clipLength = miscEncounterBeginnings[9].length;
+                        canContinue = true;
+                    }
+                    else
+                    {
+                        StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[10], miscEncounterBeginnings[10]));
+                        clipLength = miscEncounterBeginnings[10].length;
+                        canContinue = true;
+                    }
                 }
             }
         }
@@ -585,7 +689,7 @@ public class QuestController : MonoBehaviour
             }
             else if (stage == 2)
             {
-                if (timesFacedVillage == 1)
+                if (timesFacedProtection == 0)
                 {
                     StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[4], miscEncounterBeginnings[4]));
                     clipLength = miscEncounterBeginnings[4].length;
@@ -609,17 +713,26 @@ public class QuestController : MonoBehaviour
             }
             else
             {
-                if (timesFailedToSave == 0)
+                if (timesFacedProtection == 0)
                 {
-                    StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[9], miscEncounterBeginnings[9]));
-                    clipLength = miscEncounterBeginnings[9].length;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[4], miscEncounterBeginnings[4]));
+                    clipLength = miscEncounterBeginnings[4].length;
                     canContinue = true;
                 }
                 else
                 {
-                    StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[10], miscEncounterBeginnings[10]));
-                    clipLength = miscEncounterBeginnings[10].length;
-                    canContinue = true;
+                    if (timesFailedToSave == 0)
+                    {
+                        StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[9], miscEncounterBeginnings[9]));
+                        clipLength = miscEncounterBeginnings[9].length;
+                        canContinue = true;
+                    }
+                    else
+                    {
+                        StartCoroutine(playSubtitlesAndAudio(miscEncounterBeginningsSub[10], miscEncounterBeginnings[10]));
+                        clipLength = miscEncounterBeginnings[10].length;
+                        canContinue = true;
+                    }
                 }
             }
         }
@@ -663,7 +776,7 @@ public class QuestController : MonoBehaviour
             }
             else if (timesFacedSkeletons < timesFacedGoblins)
             {
-                if (timesFacedGoblins + timesFacedBandits == 6)
+                if (timesFacedGoblins + timesFacedBandits >= 4)
                 {
                     StartCoroutine(playSubtitlesAndAudio(bossEncounterBeginningsSub[3], bossEncounterBeginning[3]));
                     clipLength = bossEncounterBeginning[3].length;
@@ -702,7 +815,7 @@ public class QuestController : MonoBehaviour
         }
         if (index == 9)
         {
-            if (timesFailedToSave == 0 && timesFailedToSave == 0)
+            if (timesFailedToSave == 0 && timesFailedToSocialize == 0)
             {
                 StartCoroutine(playSubtitlesAndAudio(adventureEndingsSub[0], adventureEndings[0]));
                 clipLength = adventureEndings[0].length;
@@ -791,16 +904,28 @@ public class QuestController : MonoBehaviour
         {
             if (timesFailedToSave - timesFailedPrior == 0)
             {
-                int ind = 0 + (stage - 1) * 6;
-                if (ind > 11) ind = 6;
-                StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
-                clipLength = miscEncounterEndings[ind].length;
-                canContinue = true;
+                if (GameObject.Find("Player").GetComponent<PlayerController>().getHealth() == 10)
+                {
+                    int ind = 0 + (stage - 1) * 9;
+                    if (ind > 17) ind = 9;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
+                    clipLength = miscEncounterEndings[ind].length;
+                    canContinue = true;
+                }
+                else
+                {
+                    int ind = 1 + (stage - 1) * 9;
+                    if (ind > 17) ind = 10;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
+                    clipLength = miscEncounterEndings[ind].length;
+                    canContinue = true;
+
+                }
             }
             else
             {
-                int ind = 1 + (stage - 1) * 6;
-                if (ind > 11) ind = 7;
+                int ind = 2 + (stage - 1) * 9;
+                if (ind > 17) ind = 11;
                 StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
                 clipLength = miscEncounterEndings[ind].length;
                 canContinue = true;
@@ -810,16 +935,28 @@ public class QuestController : MonoBehaviour
         {
             if (timesFailedToSave - timesFailedPrior == 0)
             {
-                int ind = 2 + (stage - 1) * 6;
-                if (ind > 11) ind = 8;
-                StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
-                clipLength = miscEncounterEndings[ind].length;
-                canContinue = true;
+                if (GameObject.Find("Player").GetComponent<PlayerController>().getHealth() == 10)
+                {
+                    int ind = 3 + (stage - 1) * 9;
+                    if (ind > 17) ind = 12;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
+                    clipLength = miscEncounterEndings[ind].length;
+                    canContinue = true;
+                }
+                else
+                {
+                    int ind = 4 + (stage - 1) * 9;
+                    if (ind > 17) ind = 13;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
+                    clipLength = miscEncounterEndings[ind].length;
+                    canContinue = true;
+
+                }
             }
             else
             {
-                int ind = 3 + (stage - 1) * 6;
-                if (ind > 11) ind = 9;
+                int ind = 5 + (stage - 1) * 9;
+                if (ind > 17) ind = 14;
                 StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
                 clipLength = miscEncounterEndings[ind].length;
                 canContinue = true;
@@ -827,18 +964,30 @@ public class QuestController : MonoBehaviour
         }
         if (index == 6)
         {
-            if (inTime)
+            if (timesFailedToSocialize - timesFailedPrior == 0)
             {
-                int ind = 4 + (stage - 1) * 6;
-                if (ind > 11) ind = 10;
-                StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
-                clipLength = miscEncounterEndings[ind].length;
-                canContinue = true;
+                if (GameObject.Find("Player").GetComponent<PlayerController>().getHealth() == 10)
+                {
+                    int ind = 6 + (stage - 1) * 9;
+                    if (ind > 17) ind = 15;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
+                    clipLength = miscEncounterEndings[ind].length;
+                    canContinue = true;
+                }
+                else
+                {
+                    int ind = 7 + (stage - 1) * 9;
+                    if (ind > 17) ind = 16;
+                    StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
+                    clipLength = miscEncounterEndings[ind].length;
+                    canContinue = true;
+
+                }
             }
             else
             {
-                int ind = 5 + (stage - 1) * 6;
-                if (ind > 11) ind = 11;
+                int ind = 8 + (stage - 1) * 9;
+                if (ind > 17) ind = 17;
                 StartCoroutine(playSubtitlesAndAudio(miscEncounterEndingsSub[ind], miscEncounterEndings[ind]));
                 clipLength = miscEncounterEndings[ind].length;
                 canContinue = true;
@@ -863,7 +1012,7 @@ public class QuestController : MonoBehaviour
             }
             else if (timesFacedSkeletons < timesFacedGoblins)
             {
-                if (timesFacedGoblins + timesFacedBandits == 6)
+                if (timesFacedGoblins + timesFacedBandits >=4)
                 {
                     StartCoroutine(playSubtitlesAndAudio(bossEncounterEndingsSub[3], bossEncounterEndings[3]));
                     clipLength = bossEncounterEndings[3].length;
@@ -889,14 +1038,17 @@ public class QuestController : MonoBehaviour
     {
         if (i >= 0 && i < 6)
         {
+            yield return null;
             StartCoroutine(checkForEnemies(i));
         }
         if (i == 4 || i == 5)
         {
+            yield return null;
             StartCoroutine(checkForShovables());
         }
         if (i == 6)
         {
+            yield return null;
             StartCoroutine(checkForVillagers());
         }
         yield return null;
@@ -906,9 +1058,9 @@ public class QuestController : MonoBehaviour
     {
         List<GameObject> objects = EG.GetObjects();
         bool test = false;
-        canContinue = false;
+        bool canContinue1 = false;
 
-        while (!canContinue)
+        while (!canContinue1 && !canContinue)
         {
             test = true;
             foreach (GameObject obj in objects)
@@ -921,8 +1073,12 @@ public class QuestController : MonoBehaviour
 
             if(test == true)
             {
+                canContinue1 = true;
                 canContinue = true;
-                if(index > 3)
+                StartCoroutine(EG.Despawn());
+                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(clipLength);
+                if (index > 3)
                 {
                     if (GameObject.Find("Player").GetComponent<PlayerController>().getHealth() == 10)
                     {
@@ -931,9 +1087,18 @@ public class QuestController : MonoBehaviour
                     else
                     {
                         timesSaved++;
+                        int hp = GameObject.Find("Player").GetComponent<PlayerController>().getHealth();
+                        if(hp + 3 > 10)
+                        {
+                            GameObject.Find("Player").GetComponent<PlayerController>().changeHealth(10 - hp);
+                        }
+                        else
+                        {
+                            GameObject.Find("Player").GetComponent<PlayerController>().changeHealth(3);
+                        }
+                        GameObject spawn = Instantiate(healUp, PlayerLevels[0].transform.position, Quaternion.identity);
                     }
                 }
-                StartCoroutine(EG.Despawn());
             }
             yield return null;
         }
@@ -944,10 +1109,11 @@ public class QuestController : MonoBehaviour
     {
         List<GameObject> objects = EG.GetObjects();
         bool test = false;
-        canContinue = false;
+        bool canContinue1 = false;
 
-        while (!canContinue)
+        while (!canContinue1 && !canContinue)
         {
+            yield return null;
             test = true;
             foreach (GameObject obj in objects)
             {
@@ -959,12 +1125,13 @@ public class QuestController : MonoBehaviour
 
             if (test == true)
             {
-                canContinue = true;
+                canContinue1 = true;
                 timesFailedToSave++;
                 StartCoroutine(EG.Despawn());
             }
             yield return null;
         }
+        canContinue = true;
         yield return new WaitForSeconds(0f);
     }
 
@@ -972,26 +1139,47 @@ public class QuestController : MonoBehaviour
     {
         List<GameObject> objects = EG.GetObjects();
         bool test = false;
-        canContinue = false;
+        bool canContinue1 = false;
 
-        while (!canContinue)
+        while (!canContinue1 && !canContinue)
         {
             test = true;
+            villCnt = 0;
             foreach (GameObject obj in objects)
             {
                 if (obj && obj.layer == LayerMask.NameToLayer("Villager"))
                 {
                     test = false;
+                    villCnt++;
                 }
             }
+
+            villagersLeft.GetComponent<Text>().text = (villCnt + "/5");
 
             if (test == true)
             {
                 canContinue = true;
-                timesFailedToSocialize++;
+                canContinue1 = true;
+                StartCoroutine(EG.Despawn());
                 GameObject.Find("Player").GetComponent<PlayerController>().SwapWeapon(1);
                 GameObject.Find("Player").GetComponent<PlayerController>().canSwap = true;
-                StartCoroutine(EG.Despawn());
+                counter.SetActive(false);
+                villagersLeft.SetActive(false);
+                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(clipLength);
+                if (GameObject.Find("Player").GetComponent<PlayerController>().getHealth() != 10)
+                {
+                    int hp = GameObject.Find("Player").GetComponent<PlayerController>().getHealth();
+                    if (hp + 3 > 10)
+                    {
+                        GameObject.Find("Player").GetComponent<PlayerController>().changeHealth(10 - hp);
+                    }
+                    else
+                    {
+                        GameObject.Find("Player").GetComponent<PlayerController>().changeHealth(3);
+                    }
+                    GameObject spawn = Instantiate(healUp, PlayerLevels[0].transform.position, Quaternion.identity);
+                }
             }
             yield return null;
         }

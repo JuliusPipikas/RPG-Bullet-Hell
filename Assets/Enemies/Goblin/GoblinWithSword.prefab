@@ -103,6 +103,7 @@ MonoBehaviour:
   hand: {fileID: 4502773765969405597}
   movementVelocity: 1.5
   moveTowardsPlayer: 1
+  moveTowardsProtection: 0
   melee: 1
   meleeDistance: 1.5
   projectilePool: {fileID: 0}
@@ -153,7 +154,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &453214788101192817
 CapsuleCollider2D:
@@ -229,7 +230,7 @@ MonoBehaviour:
   - {x: -0.5, y: 0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 33486
+  m_InstanceId: 29558
 --- !u!1 &4080835732380920333
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,8 +361,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -252819899
-  m_SortingLayer: 4
+  m_SortingLayerID: 514682769
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

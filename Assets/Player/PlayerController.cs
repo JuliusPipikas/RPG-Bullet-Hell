@@ -13,8 +13,7 @@ public class PlayerController : MonoBehaviour
     private GameObject hand;
     [SerializeField]
     private GameObject aura;
-    [SerializeField]
-    private float movementVelocity = 3f;
+    public float movementVelocity = 3f;
 
     [SerializeField]
     private Pooler projectilePool1;
@@ -409,23 +408,23 @@ public class PlayerController : MonoBehaviour
             aura.GetComponent<Light2D>().intensity += 0.1f;
             yield return new WaitForSeconds(0.05f);
         }
-        if (currentWeapon == 2)
-        {
-            canBurst = true;
-        }
+        canBurst = true;
     }
 
     private void Burst()
     {
         if (!canBurst) return;
 
-        StartCoroutine(CanBurst());
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(aura.transform.position.x, aura.transform.position.y), 1f);
-        foreach (var hitCollider in hitColliders)
+        if (currentWeapon == 2)
         {
-            if(hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            StartCoroutine(CanBurst());
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(aura.transform.position.x, aura.transform.position.y), 1f);
+            foreach (var hitCollider in hitColliders)
             {
-                hitCollider.GetComponent<EnemyController>().changeHealth(-1);
+                if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    hitCollider.GetComponent<EnemyController>().changeHealth(-2);
+                }
             }
         }
     }
@@ -460,7 +459,7 @@ public class PlayerController : MonoBehaviour
         canBurst = false;
         aura.SetActive(false);
         projectilePool = projectilePool3;
-        timeBetweenShots = 0.5f;
+        timeBetweenShots = 0.25f;
         handForTexture.GetComponent<Light2D>().enabled = false;
     }
 

@@ -15,6 +15,8 @@ public class EncounterGenerator : MonoBehaviour
     private GameObject Player;
     [SerializeField]
     private GameObject SpawnPoof;
+    [SerializeField]
+    private GameObject projectiles;
 
     [SerializeField]
     private int intensityTest = 1;
@@ -50,7 +52,7 @@ public class EncounterGenerator : MonoBehaviour
     void Awake() 
     {
         objects = new List<GameObject>();
-        objects.Add(Player);
+        objects.Add(GameObject.Find("Player"));
     }
 
     public List<GameObject> GetObjects()
@@ -311,10 +313,7 @@ public class EncounterGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        for (int i = 0; i < intensity; i++)
-        {
-            PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 15, true, Shovable);
-        }
+        PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 10+5*intensity, true, Shovable);
 
     }
 
@@ -365,8 +364,8 @@ public class EncounterGenerator : MonoBehaviour
             intensity = 3;
         }
 
-        Player.GetComponent<PlayerController>().SwapWeapon(6);
-        Player.GetComponent<PlayerController>().canSwap = false;
+        GameObject.Find("Player").GetComponent<PlayerController>().SwapWeapon(6);
+        GameObject.Find("Player").GetComponent<PlayerController>().canSwap = false;
 
         encounterText.text = "Socialize!";
 
@@ -381,10 +380,10 @@ public class EncounterGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        for (int i = 0; i < intensity*5; i++)
+        for (int i = 0; i < 5; i++)
         {
             int rand = Random.Range(1, 5);
-            PlaceVillagerInSpreeSpot("Villager" + rand.ToString(), 0.3f, 0f, maxRadius, Vector2.zero);
+            PlaceVillagerInSpreeSpot("Villager" + rand.ToString(), 0.3f, 0f, maxRadius, Vector2.zero, intensity);
         }
 
     }
@@ -529,7 +528,7 @@ public class EncounterGenerator : MonoBehaviour
         }
     }
 
-    public void PlaceVillagerInSpreeSpot(string name, float rangeDistance, float spawnRadiusMin, float spawnRadius, Vector2 offset)
+    public void PlaceVillagerInSpreeSpot(string name, float rangeDistance, float spawnRadiusMin, float spawnRadius, Vector2 offset, int intensity)
     {
         bool foundFreeSpot = false;
 
@@ -574,7 +573,7 @@ public class EncounterGenerator : MonoBehaviour
 
             if (foundFreeSpot)
             {
-                objects.Add(ef.SpawnVillager(name, spawnPos.x, spawnPos.y));
+                objects.Add(ef.SpawnVillager(name, spawnPos.x, spawnPos.y, intensity));
             }
 
         }
@@ -592,9 +591,20 @@ public class EncounterGenerator : MonoBehaviour
             }
         }
 
+        yield return new WaitForSeconds(0.1f);
+
+        for(int i = 0; i < projectiles.transform.childCount; i++)
+        {
+            Pooler pool = projectiles.transform.GetChild(i).GetComponent<Pooler>();
+            for(int u = 0; u < pool.transform.childCount; u++)
+            {
+                pool.transform.GetChild(u).gameObject.SetActive(false);
+            }
+        }
+
         yield return new WaitForSeconds(0.31f);
 
         objects = new List<GameObject>();
-        objects.Add(Player);
+        objects.Add(GameObject.Find("Player"));
     }
 }

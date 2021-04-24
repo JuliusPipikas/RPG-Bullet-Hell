@@ -28,6 +28,11 @@ public class Pooler : MonoBehaviour
         }
     }
 
+    public List<GameObject> getActiveList()
+    {
+        return usedList;
+    }
+
     private void GenerateNewObject()
     {
         Vector3 dir = Vector3.left;
