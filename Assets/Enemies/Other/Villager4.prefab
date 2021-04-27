@@ -182,6 +182,8 @@ MonoBehaviour:
   allocatedWalkTime: 2
   movementVariant: 1
   facingRight: 1
+  hit: {fileID: 8300000, guid: 7bccbf2fe8e9cf2409a009133797c599, type: 3}
+  death: {fileID: 8300000, guid: 7bd7785df9b1086438b683cb2b05ada8, type: 3}
 --- !u!50 &4912985354344554862
 Rigidbody2D:
   serializedVersion: 4

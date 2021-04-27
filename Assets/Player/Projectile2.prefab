@@ -4928,6 +4928,7 @@ MonoBehaviour:
   damage: 1
   projectileTime: 1
   spawnPoof: {fileID: 2734031342273289974, guid: 8c2b31197256c5b4282bc5a9072b8579, type: 3}
+  hit: {fileID: 8300000, guid: d98558a57b4a4d44c81ba78c9b05b40e, type: 3}
 --- !u!58 &387671519298042656
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -8,6 +8,15 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject menu;
+    [SerializeField]
+    private GameObject title;
+
+    [SerializeField]
+    private GameObject loadingScreen;
+    [SerializeField]
+    private Image loadingSprite;
+    [SerializeField]
+    private List<Sprite> loadingSprites;
 
     [SerializeField]
     private GameObject options;
@@ -29,45 +38,103 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private Dropdown qualityDropdown;
 
+    [SerializeField]
+    private AudioClip start;
+    [SerializeField]
+    private AudioClip buttonPress;
+    [SerializeField]
+    private AudioClip Interact;
+    [SerializeField]
+    private AudioClip menuMusic;
+
     public void Awake()
     {
         QualitySettings.SetQualityLevel(3);
-        qualityDropdown.value = 3;
-        musicSlider.value = 1;
-        sfxSlider.value = 1;
+        GameObject preservedValues = GameObject.Find("preservedValues");
+        if (preservedValues)
+        {
+            qualityDropdown.value = preservedValues.GetComponent<PreserveValues>().quality_level;
+            music.volume = preservedValues.GetComponent<PreserveValues>().music_volume;
+            sfx.volume = preservedValues.GetComponent<PreserveValues>().sfx_volume;
+            Object.Destroy(preservedValues);
+        }
+        else
+        {
+            qualityDropdown.value = 3;
+        }
+
+        musicSlider.value = music.volume;
+        sfxSlider.value = sfx.volume;
+        music.clip = menuMusic;
+        music.loop = true;
+        music.Play();
+
     }
     public void onStartGame()
     {
+        sfx.PlayOneShot(buttonPress);
         Object.DontDestroyOnLoad(soundManager);
-        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        menu.SetActive(false);
+        loadingScreen.SetActive(true);
+        title.SetActive(false);
+        StartCoroutine(LoadAsynchronously());
+    }
+
+    IEnumerator LoadAsynchronously()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Game", LoadSceneMode.Single);
+        while (!operation.isDone)
+        {
+            loadingSprite.sprite = loadingSprites[Mathf.RoundToInt(operation.progress * 10)];
+            yield return null;
+        }
     }
 
     public void onExit()
     {
+        sfx.PlayOneShot(buttonPress);
         Application.Quit();
         Debug.Log("Quit Application");
     }
 
     public void onOptions()
     {
+        sfx.PlayOneShot(buttonPress);
         menu.SetActive(false);
         options.SetActive(true);
     }
 
     public void onOptionsBack()
     {
+        sfx.PlayOneShot(buttonPress);
         menu.SetActive(true);
         options.SetActive(false);
     }
 
+    bool t = true;
+
     public void onChangeQuality()
     {
+        if (!t)
+        {
+            sfx.PlayOneShot(Interact);
+        }
+        t = false;
         QualitySettings.SetQualityLevel(qualityDropdown.value);
     }
 
+    bool tt = true;
+
     public void setVolume()
     {
-        music.volume = musicSlider.value;
-        sfx.volume = sfxSlider.value;
+        if (tt)
+        {
+            tt = false;
+        }
+        else
+        {
+            music.volume = musicSlider.value;
+            sfx.volume = sfxSlider.value;
+        }
     }
 }

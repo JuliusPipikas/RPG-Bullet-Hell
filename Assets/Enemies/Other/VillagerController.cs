@@ -37,20 +37,30 @@ public class VillagerController : MonoBehaviour
     private Vector3 walkPosition = Vector3.zero;
     private bool firstTimeMove = true;
     private float angle;
-    
+
+    private AudioSource SFX;
+
+    [SerializeField]
+    private AudioClip hit;
+    [SerializeField]
+    private AudioClip death;
+
 
     private Vector2 collissionPoint;
 
     private void Start()
     {
         health = maxHealth;
-        changeHealth(0);
+        
 
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
 
         randMovementOffset = Random.Range(0, 200) / 100;
+
+        SFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
+        changeHealth(0);
     }
 
     public void changeMoveIntensity(int intensity)
@@ -70,11 +80,12 @@ public class VillagerController : MonoBehaviour
         {
             GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
             Destroy(spawn, 0.3f);
-
+            SFX.PlayOneShot(death);
             Destroy(gameObject, 0.2f);
         }
         if (health >= 0)
         {
+            SFX.PlayOneShot(hit);
             healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
         }
     }

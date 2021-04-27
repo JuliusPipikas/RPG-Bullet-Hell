@@ -103,10 +103,24 @@ public class EnemyController : MonoBehaviour
     private bool canSequence = true;
     private GameObject Protection;
 
+    private AudioSource SFX;
+
+    [SerializeField]
+    private AudioClip HitSFX;
+    [SerializeField]
+    private AudioClip ShootSFX;
+    [SerializeField]
+    private AudioClip DeathSFX;
+
+    [SerializeField]
+    private AudioClip necromancerSpawnSFX;
+    [SerializeField]
+    private AudioClip necromancerSkeletonsSFX;
+
     private void Awake()
     {
         health = maxHealth;
-        changeHealth(0);
+        
         player = GameObject.FindGameObjectWithTag("Player");
         randShootingOffset = Random.Range(200, 500) / 100;
         randMovementOffset = Random.Range(0, 200) / 100;
@@ -115,6 +129,13 @@ public class EnemyController : MonoBehaviour
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
+
+        SFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
+        changeHealth(0);
+        if (gameObject.name.Contains("Necromancer"))
+        {
+            SFX.PlayOneShot(necromancerSpawnSFX);
+        }
     }
 
     public void setProtection(GameObject go)
@@ -147,6 +168,7 @@ public class EnemyController : MonoBehaviour
                 prj.transform.position = hand.transform.position; // adjusts the projectiles starting position and rotation according to the enemy hand's position/rotation
                 prj.transform.rotation = hand.transform.rotation;
                 prj.SetActive(true);
+                SFX.PlayOneShot(ShootSFX);
                 StartCoroutine(CanShoot());
             }
 
@@ -200,7 +222,7 @@ public class EnemyController : MonoBehaviour
                     prj[i].SetActive(true);
                     angleIndex++;
                 }
-
+                SFX.PlayOneShot(ShootSFX);
             }
 
             // CIRCLE
@@ -237,6 +259,7 @@ public class EnemyController : MonoBehaviour
                     prj[i].transform.rotation = hand.transform.rotation * Quaternion.Euler(0, 0, incrementAngle);
                     prj[i].SetActive(true);
                 }
+                SFX.PlayOneShot(ShootSFX);
             }
 
             // SPIRAL
@@ -345,6 +368,8 @@ public class EnemyController : MonoBehaviour
             {
                 eg.PlaceEnemyInFreeSpot("SkeletonWithSword", 0.3f, 0.5f, 3.5f, Vector2.zero, 0, false, null);
             }
+
+            SFX.PlayOneShot(necromancerSkeletonsSFX);
 
             yield return new WaitForSeconds(3);
 
@@ -541,6 +566,7 @@ public class EnemyController : MonoBehaviour
         health += amount;
         if (health <= 0)
         {
+            SFX.PlayOneShot(DeathSFX);
             GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
             Destroy(spawn, 0.3f);
             if (gameObject.name == "Necromancer")
@@ -550,9 +576,16 @@ public class EnemyController : MonoBehaviour
             }
             Destroy(gameObject.transform.parent.gameObject, 0.2f);
         }
-        if (health >= 0)
+        else if (health >= 0)
         {
-            healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
+            SFX.PlayOneShot(HitSFX);
+            int t = Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f);
+            if(t == 0)
+            {
+                t = 1;
+            }
+
+            healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[t];
         }
     }
 

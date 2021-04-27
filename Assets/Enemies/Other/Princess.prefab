@@ -161,6 +161,8 @@ MonoBehaviour:
   - {fileID: -4294464135343857242, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   spawnPoof: {fileID: 4413763016363212477, guid: 056c8a252f514fc40a237bccf26d09fe, type: 3}
+  hit: {fileID: 8300000, guid: 7bccbf2fe8e9cf2409a009133797c599, type: 3}
+  death: {fileID: 8300000, guid: 7bd7785df9b1086438b683cb2b05ada8, type: 3}
 --- !u!50 &5100805099962755117
 Rigidbody2D:
   serializedVersion: 4

@@ -47,12 +47,18 @@ public class EncounterGenerator : MonoBehaviour
 
     private GameObject Shovable;
 
+    private AudioSource SFX;
+
+    [SerializeField]
+    private AudioClip Spawn;
+
 
     // Start is called before the first frame update
     void Awake() 
     {
         objects = new List<GameObject>();
         objects.Add(GameObject.Find("Player"));
+        SFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
     }
 
     public List<GameObject> GetObjects()
@@ -125,8 +131,11 @@ public class EncounterGenerator : MonoBehaviour
         }
         encounterText.gameObject.SetActive(true);
         StartCoroutine(turnOffAudio());
+
+        SFX.PlayOneShot(Spawn);
         if (intensity < 4)
         {
+            SFX.PlayOneShot(Spawn);
             for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
             {
                 PlaceTerrainInFreeSpot("Plant", 1f, maxRadius, Vector2.zero);
@@ -145,6 +154,7 @@ public class EncounterGenerator : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         if (intensity < 4)
         {
+            SFX.PlayOneShot(Spawn);
             for (int i = 0; i < Mathf.RoundToInt(1.5f * intensity); i++)
             {
                 PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
@@ -153,6 +163,7 @@ public class EncounterGenerator : MonoBehaviour
         }
         else
         {
+            SFX.PlayOneShot(Spawn);
             PlaceEnemyInFreeSpot("GoblinStack", 0.3f, 0.5f, maxRadius - 2, Vector2.zero, 0, false, null);
         }
     }
@@ -169,6 +180,7 @@ public class EncounterGenerator : MonoBehaviour
 
         StartCoroutine(turnOffAudio());
 
+        SFX.PlayOneShot(Spawn);
         for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
         {
             PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
@@ -180,6 +192,7 @@ public class EncounterGenerator : MonoBehaviour
         int t = 1;
         if (intensity == 0) t = 0;
 
+        SFX.PlayOneShot(Spawn);
         for (int i = 0; i < Mathf.RoundToInt(0.5f*t) + intensity; i++)
         {
             PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
@@ -212,6 +225,7 @@ public class EncounterGenerator : MonoBehaviour
 
         StartCoroutine(turnOffAudio());
 
+        SFX.PlayOneShot(Spawn);
         for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
         {
             PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
@@ -220,7 +234,8 @@ public class EncounterGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        if(intensity != 3)
+        SFX.PlayOneShot(Spawn);
+        if (intensity != 3)
         {
             for (int i = 0; i < 2 * intensity; i++)
             {
@@ -259,6 +274,7 @@ public class EncounterGenerator : MonoBehaviour
         encounterText.gameObject.SetActive(true);
         StartCoroutine(turnOffAudio());
 
+        SFX.PlayOneShot(Spawn);
         if (intensity < 4)
         {
             for (int i = 0; i < 7 * intensity; i++)
@@ -275,6 +291,8 @@ public class EncounterGenerator : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2.5f);
+
+        SFX.PlayOneShot(Spawn);
 
         if (intensity < 4)
         {
@@ -303,6 +321,7 @@ public class EncounterGenerator : MonoBehaviour
 
         StartCoroutine(turnOffAudio());
 
+        SFX.PlayOneShot(Spawn);
         PlaceShovableInFreeSpot("Chest", 0.3f, 0f, 1.5f, Vector2.zero);
 
         for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
@@ -313,6 +332,7 @@ public class EncounterGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
+        SFX.PlayOneShot(Spawn);
         PlaceEnemyInFreeSpot("Bandit", 0.3f, 0.5f, maxRadius, Vector2.zero, 10+5*intensity, true, Shovable);
 
     }
@@ -330,6 +350,7 @@ public class EncounterGenerator : MonoBehaviour
 
         StartCoroutine(turnOffAudio());
 
+        SFX.PlayOneShot(Spawn);
         PlaceShovableInFreeSpot("Princess", 0.3f, 0f, 1.5f, Vector2.zero);
 
         for (int i = 0; i < Mathf.FloorToInt(3.5f * intensity); i++)
@@ -340,6 +361,7 @@ public class EncounterGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
+        SFX.PlayOneShot(Spawn);
         if (intensity >= 1)
         {
             PlaceEnemyInFreeSpot("Goblin", 0.3f, 0.5f, maxRadius, Vector2.zero, 0, false, null);
@@ -373,6 +395,7 @@ public class EncounterGenerator : MonoBehaviour
 
         StartCoroutine(turnOffAudio());
 
+        SFX.PlayOneShot(Spawn);
         for (int i = 0; i < 4 * intensity; i++)
         {
             PlaceTerrainInFreeSpot("Pillar", 1f, maxRadius, Vector2.zero);
@@ -581,7 +604,7 @@ public class EncounterGenerator : MonoBehaviour
 
     public IEnumerator Despawn()
     {
-        for(int i = 1; i < objects.Count; i++)
+        for (int i = 1; i < objects.Count; i++)
         {
             if (objects[i] != null)
             {

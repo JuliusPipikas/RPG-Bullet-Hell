@@ -708,7 +708,7 @@ MonoBehaviour:
   stopTime: 1
   allocatedWalkTime: 2
   movementVariant: 1
-  maxHealth: 60
+  maxHealth: 70
   facingRight: 1
   healthBar: {fileID: 7625225959614804751}
   healthBarOffset: 0.7
@@ -724,15 +724,20 @@ MonoBehaviour:
   - {fileID: 5182346603733836655, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: -4294464135343857242, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   - {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
-  timeBetweenShots: 2
+  timeBetweenShots: 1.5
   shootingType: 0
-  numberOfShots: 18
+  numberOfShots: 20
   distanceAngle: 16
   radius: 0.1
   numberOfSpins: 1
   spiralWaitBetweenShots: 0.15
   SpawnPoofOffset: {x: 0.05, y: 0, z: 0}
   spawnPoof: {fileID: 4413763016363212477, guid: 056c8a252f514fc40a237bccf26d09fe, type: 3}
+  hit: {fileID: 8300000, guid: 7bccbf2fe8e9cf2409a009133797c599, type: 3}
+  death: {fileID: 8300000, guid: 11369e16443f5aa4895a71cb2434ee4c, type: 3}
+  spawn: {fileID: 8300000, guid: e8360bf7f1621a148abbba3f051316e1, type: 3}
+  rage: {fileID: 8300000, guid: ec91e49a958ae784d8e4a60d035f9657, type: 3}
+  shoot: {fileID: 8300000, guid: 734ef7cfe72584b4ebdbd8e5ec2ab30e, type: 3}
 --- !u!1 &5347823698329867286
 GameObject:
   m_ObjectHideFlags: 0

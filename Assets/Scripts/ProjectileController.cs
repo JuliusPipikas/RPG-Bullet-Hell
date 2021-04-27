@@ -34,9 +34,13 @@ public class ProjectileController : MonoBehaviour
         {
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
         }
-        if (!gameObject.name.Contains("Player"))
+        if (gameObject.layer != LayerMask.NameToLayer("PlayerProjectile"))
         {
-            StartCoroutine(EnableCollirAfterTime());
+            StartCoroutine(EnableCollirAfterTime(0.1f));
+        }
+        else
+        {
+            StartCoroutine(EnableCollirAfterTime(0f));
         }
     }
 
@@ -46,9 +50,9 @@ public class ProjectileController : MonoBehaviour
         pool.ReturnObject(gameObject);
     }
 
-    IEnumerator EnableCollirAfterTime()
+    IEnumerator EnableCollirAfterTime(float time)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(time);
         if (gameObject.GetComponent<BoxCollider2D>())
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = true;

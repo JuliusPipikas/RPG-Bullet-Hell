@@ -19,15 +19,26 @@ public class ProtectController : MonoBehaviour
     private Shader shaderSpritesDefault;
 
     public GameObject spawnPoof;
+    private AudioSource SFX;
+
+    [SerializeField]
+    private AudioClip hit;
+    [SerializeField]
+    private AudioClip death;
+
 
     private void Start()
     {
         health = maxHealth;
-        changeHealth(0);
+        
 
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
+
+
+        SFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
+        changeHealth(0);
     }
 
     public void changeHealth(int amount)
@@ -35,17 +46,20 @@ public class ProtectController : MonoBehaviour
         if (amount < 0)
         {
             StartCoroutine(flashWhite());
+            
         }
         health += amount;
         if (health <= 0)
         {
             GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
+            SFX.PlayOneShot(death);
             Destroy(spawn, 0.3f);
             
             Destroy(gameObject, 0.2f);
         }
         if (health >= 0)
         {
+            SFX.PlayOneShot(hit);
             healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
         }
     }

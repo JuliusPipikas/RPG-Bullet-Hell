@@ -91,11 +91,22 @@ public class StackController : MonoBehaviour
     private Shader shaderSpritesDefault;
 
     public GameObject spawnPoof;
+    private AudioSource SFX;
+    [SerializeField]
+    private AudioClip hit;
+    [SerializeField]
+    private AudioClip death;
+    [SerializeField]
+    private AudioClip spawn;
+    [SerializeField]
+    private AudioClip rage;
+    [SerializeField]
+    private AudioClip shoot;
 
     private void Awake()
     {
         health = maxHealth;
-        changeHealth(0);
+        
         player = GameObject.FindGameObjectWithTag("Player");
         randShootingOffset = Random.Range(200, 500) / 100;
         randMovementOffset = Random.Range(0, 200) / 100;
@@ -104,6 +115,11 @@ public class StackController : MonoBehaviour
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
+
+
+        SFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
+        changeHealth(0);
+        SFX.PlayOneShot(spawn);
     }
 
     private void Shoot()
@@ -163,6 +179,7 @@ public class StackController : MonoBehaviour
             prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position;
             prj[i].transform.rotation = Quaternion.Euler(0, 0, incrementAngle);
             prj[i].SetActive(true);
+            SFX.PlayOneShot(shoot);
 
             yield return new WaitForSeconds(spiralWaitBetweenShots);
         }
@@ -185,6 +202,7 @@ public class StackController : MonoBehaviour
             prj[i].transform.position = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0) * radius + gameObject.transform.position + new Vector3(0, rand_height, 0);
             prj[i].transform.rotation = Quaternion.Euler(0, 0, rand_angle);
             prj[i].SetActive(true);
+            SFX.PlayOneShot(shoot);
 
             yield return new WaitForSeconds(spiralWaitBetweenShots/2);
         }
@@ -349,6 +367,7 @@ public class StackController : MonoBehaviour
         canWalk = false;
     }
 
+    private bool firstTimeRage = true;
     public void changeHealth(int amount)
     {
         if (amount < 0)
@@ -356,16 +375,28 @@ public class StackController : MonoBehaviour
             StartCoroutine(flashWhite());
         }
         health += amount;
+        if(!firstTimeRage && health > maxHealth / 2)
+        {
+            firstTimeRage = false;
+            SFX.PlayOneShot(rage);
+        }
         if (health <= 0)
         {
             GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
             Destroy(spawn, 0.3f);
-            
+            SFX.PlayOneShot(death);
+
             Destroy(gameObject.transform.parent.gameObject, 0.2f);
         }
         if (health >= 0)
         {
-            healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
+            int t = Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f);
+            if(t == 0)
+            {
+                t = 1;
+            }
+            healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[t];
+            SFX.PlayOneShot(hit);
         }
     }
 

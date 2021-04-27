@@ -81,6 +81,14 @@ public class @Actions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""f27acb9d-fb09-45f2-b74d-75d38a8181eb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -215,6 +223,17 @@ public class @Actions : IInputActionCollection, IDisposable
                     ""action"": ""Previous"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d84c269b-5dad-451c-a2f3-0165dc66c9e1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -231,6 +250,7 @@ public class @Actions : IInputActionCollection, IDisposable
         m_Player_SwapWeapons3 = m_Player.FindAction("SwapWeapons3", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +308,7 @@ public class @Actions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_SwapWeapons3;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Previous;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @Actions m_Wrapper;
@@ -300,6 +321,7 @@ public class @Actions : IInputActionCollection, IDisposable
         public InputAction @SwapWeapons3 => m_Wrapper.m_Player_SwapWeapons3;
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Previous => m_Wrapper.m_Player_Previous;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -333,6 +355,9 @@ public class @Actions : IInputActionCollection, IDisposable
                 @Previous.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrevious;
                 @Previous.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrevious;
                 @Previous.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrevious;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -361,6 +386,9 @@ public class @Actions : IInputActionCollection, IDisposable
                 @Previous.started += instance.OnPrevious;
                 @Previous.performed += instance.OnPrevious;
                 @Previous.canceled += instance.OnPrevious;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -375,5 +403,6 @@ public class @Actions : IInputActionCollection, IDisposable
         void OnSwapWeapons3(InputAction.CallbackContext context);
         void OnNext(InputAction.CallbackContext context);
         void OnPrevious(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

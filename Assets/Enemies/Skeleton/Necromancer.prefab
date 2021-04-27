@@ -488,7 +488,7 @@ MonoBehaviour:
   stopTime: 1
   allocatedWalkTime: 2
   movementVariant: 1
-  maxHealth: 35
+  maxHealth: 55
   facingRight: 1
   healthBar: {fileID: 8031690967173953546}
   healthBarOffset: 0.4
@@ -513,6 +513,11 @@ MonoBehaviour:
   spiralRandomWait: 0.1
   SpawnPoofOffset: {x: 0, y: 0, z: 0}
   spawnPoof: {fileID: 0}
+  HitSFX: {fileID: 8300000, guid: e2dd2edad58ab2d4889fe0dd5349fd8d, type: 3}
+  ShootSFX: {fileID: 8300000, guid: 6d47c2fe11a107f44b88fc066f5ed212, type: 3}
+  DeathSFX: {fileID: 8300000, guid: 11369e16443f5aa4895a71cb2434ee4c, type: 3}
+  necromancerSpawnSFX: {fileID: 8300000, guid: e8360bf7f1621a148abbba3f051316e1, type: 3}
+  necromancerSkeletonsSFX: {fileID: 8300000, guid: ec91e49a958ae784d8e4a60d035f9657, type: 3}
 --- !u!50 &420473868570140322
 Rigidbody2D:
   serializedVersion: 4

@@ -3,7 +3,17 @@ guid: 7915babbc232a104eae8548315ca7042
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - projectileDirection: {instanceID: 0}
+  - hand: {instanceID: 0}
+  - projectilePool: {instanceID: 0}
+  - healthBar: {instanceID: 0}
+  - spawnPoof: {instanceID: 0}
+  - HitSFX: {fileID: 8300000, guid: 7bccbf2fe8e9cf2409a009133797c599, type: 3}
+  - ShootSFX: {fileID: 8300000, guid: 1ff7e33bde5561a4d89e54c2009c95c1, type: 3}
+  - DeathSFX: {fileID: 8300000, guid: f35776b1720667044a346ff4c15824ad, type: 3}
+  - necromancerSpawnSFX: {instanceID: 0}
+  - necromancerSkeletonsSFX: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

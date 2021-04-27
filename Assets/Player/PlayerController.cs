@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private int maxHealth = 10;
     private int health = 10;
 
+    private bool justSwapped = false;
+
     private Actions controls;
     private bool canShoot = true;
     public bool canSwap = true;
@@ -61,11 +63,55 @@ public class PlayerController : MonoBehaviour
     private List<Sprite> weaponTextures;
 
     private int currentWeapon = 0;
+    public bool lost = false;
+
+    private AudioSource SceneSFX;
+    private AudioSource PlayerSFX;
+    private AudioSource Music;
+
+    [SerializeField]
+    private AudioClip playerHit;
+    [SerializeField]
+    private AudioClip playerShootStaff;
+    [SerializeField]
+    private AudioClip playerShootBook;
+    [SerializeField]
+    private AudioClip bookRecharged;
+    [SerializeField]
+    private AudioClip playerShootWord;
+    [SerializeField]
+    private AudioClip playerAuraAmbient;
+    [SerializeField]
+    private AudioClip playerAuraHit;
+    [SerializeField]
+    private AudioClip playerHeal;
+    [SerializeField]
+    private AudioClip playerSwap;
+    [SerializeField]
+    private AudioClip playerSwapBlocked;
+    [SerializeField]
+    private AudioClip playerDeath;
+    [SerializeField]
+    private AudioClip playerSpawn;
+
+    [SerializeField]
+    private AudioClip loss;
+    [SerializeField]
+    private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject deathMenu;
+    [SerializeField]
+    private GameObject optionsMenu;
 
     private void Awake()
     {
         controls = new Actions();
         projectilePool = projectilePool1;
+        SceneSFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
+        Music = GameObject.Find("SoundManager").transform.Find("MusicManager").GetComponent<AudioSource>();
+        PlayerSFX = gameObject.GetComponent<AudioSource>();
+        PlayerSFX.volume = SceneSFX.volume;
+        PlayerSFX.PlayOneShot(playerSpawn);
     }
 
     public int getHealth()
@@ -112,11 +158,12 @@ public class PlayerController : MonoBehaviour
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
+        //changeHealth(-9);
     }
 
     private void PlayerShoot()
     {
-        if (!canShoot) return;
+        if (!canShoot || paused) return;
 
         if (currentWeapon == 0 || currentWeapon == 3)
         {
@@ -146,6 +193,11 @@ public class PlayerController : MonoBehaviour
                 {
                     prj.GetComponentInChildren<TextMesh>().text = "Insight!";
                 }
+                PlayerSFX.PlayOneShot(playerShootWord);
+            }
+            else
+            {
+                PlayerSFX.PlayOneShot(playerShootStaff);
             }
             prj.SetActive(true);
             StartCoroutine(CanShoot());
@@ -178,7 +230,7 @@ public class PlayerController : MonoBehaviour
                 prj[i].SetActive(true);
                 angleIndex++;
             }
-
+            PlayerSFX.PlayOneShot(playerShootBook);
         }
     }
 
@@ -194,34 +246,81 @@ public class PlayerController : MonoBehaviour
         if (currentWeapon == 1)
         {
             handForTexture.GetComponent<Light2D>().enabled = true;
+            PlayerSFX.PlayOneShot(bookRecharged);
         }
         canShoot = true;
     }
 
+    public bool paused = false;
+    public GameObject DarkScreen;
+
     private void Update()
     {
-        if (canSwap)
+        if (!lost)
         {
-            // Weapon swaps
-            if (controls.Player.SwapWeapons1.triggered)
+            if (!paused)
             {
-                SwapWeapon(1);
+                if (canSwap)
+                {
+                    // Weapon swaps
+                    if (controls.Player.SwapWeapons1.triggered)
+                    {
+                        PlayerSFX.PlayOneShot(playerSwap);
+                        SwapWeapon(1);
+                    }
+                    else if (controls.Player.SwapWeapons2.triggered)
+                    {
+                        PlayerSFX.PlayOneShot(playerSwap);
+                        SwapWeapon(2);
+                    }
+                    else if (controls.Player.SwapWeapons3.triggered)
+                    {
+                        PlayerSFX.PlayOneShot(playerSwap);
+                        SwapWeapon(3);
+                    }
+                    else if (controls.Player.Next.triggered)
+                    {
+                        PlayerSFX.PlayOneShot(playerSwap);
+                        SwapWeapon(4);
+                    }
+                    else if (controls.Player.Previous.triggered)
+                    {
+                        PlayerSFX.PlayOneShot(playerSwap);
+                        SwapWeapon(5);
+                    }
+                }
+                else
+                {
+                    if (controls.Player.SwapWeapons1.triggered || controls.Player.SwapWeapons2.triggered || controls.Player.SwapWeapons3.triggered || controls.Player.Next.triggered || controls.Player.Previous.triggered)
+                    {
+                        PlayerSFX.PlayOneShot(playerSwapBlocked);
+                    }
+                }
             }
-            else if (controls.Player.SwapWeapons2.triggered)
+
+            if (controls.Player.Pause.triggered)
             {
-                SwapWeapon(2);
-            }
-            else if (controls.Player.SwapWeapons3.triggered)
-            {
-                SwapWeapon(3);
-            }
-            else if (controls.Player.Next.triggered)
-            {
-                SwapWeapon(4);
-            }
-            else if (controls.Player.Previous.triggered)
-            {
-                SwapWeapon(5);
+                if (paused)
+                {
+                    pauseMenu.SetActive(false);
+                    paused = false;
+                    PlayerSFX.UnPause();
+                    SceneSFX.UnPause();
+                    Music.UnPause();
+                    DarkScreen.SetActive(false);
+                    optionsMenu.SetActive(false);
+                    Time.timeScale = 1;
+                }
+                else
+                {
+                    pauseMenu.SetActive(true);
+                    paused = true;
+                    PlayerSFX.Pause();
+                    SceneSFX.Pause();
+                    Music.Pause();
+                    DarkScreen.SetActive(true);
+                    Time.timeScale = 0;
+                }
             }
         }
     }
@@ -301,6 +400,7 @@ public class PlayerController : MonoBehaviour
         if(currentWeapon == 6) {
             if (i == 6)
             {
+                PlayerSFX.PlayOneShot(playerSwap);
                 SwapToStaff();
                 handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[0];
                 currentWeapon = 0;
@@ -418,14 +518,20 @@ public class PlayerController : MonoBehaviour
         if (currentWeapon == 2)
         {
             StartCoroutine(CanBurst());
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(aura.transform.position.x, aura.transform.position.y), 1f);
-            foreach (var hitCollider in hitColliders)
+            if (!justSwapped)
             {
-                if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(aura.transform.position.x, aura.transform.position.y), 1f);
+                foreach (var hitCollider in hitColliders)
                 {
-                    hitCollider.GetComponent<EnemyController>().changeHealth(-2);
+                    if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                    {
+                        hitCollider.GetComponent<EnemyController>().changeHealth(-2);
+                    }
                 }
+                PlayerSFX.PlayOneShot(playerAuraHit);
             }
+            justSwapped = false;
+            
         }
     }
 
@@ -433,6 +539,7 @@ public class PlayerController : MonoBehaviour
     {
         canBurst = false;
         aura.SetActive(false);
+        PlayerSFX.clip = null;
         projectilePool = projectilePool1;
         timeBetweenShots = 0.5f;
         handForTexture.GetComponent<Light2D>().enabled = false;
@@ -442,6 +549,7 @@ public class PlayerController : MonoBehaviour
     {
         canBurst = false;
         aura.SetActive(false);
+        PlayerSFX.clip = null;
         projectilePool = projectilePool2;
         timeBetweenShots = 2f;
         handForTexture.GetComponent<Light2D>().enabled = true;
@@ -451,13 +559,17 @@ public class PlayerController : MonoBehaviour
     {
         canBurst = true;
         aura.SetActive(true);
+        PlayerSFX.clip = playerAuraAmbient;
+        justSwapped = true;
         handForTexture.GetComponent<Light2D>().enabled = false;
     }
 
     public void SwapToSocial()
     {
+        PlayerSFX.PlayOneShot(playerSwap);
         canBurst = false;
         aura.SetActive(false);
+        PlayerSFX.clip = null;
         projectilePool = projectilePool3;
         timeBetweenShots = 0.25f;
         handForTexture.GetComponent<Light2D>().enabled = false;
@@ -469,11 +581,25 @@ public class PlayerController : MonoBehaviour
         if(amount < 0)
         {
             StartCoroutine(flashWhite());
+            PlayerSFX.PlayOneShot(playerHit);
         }
         health += amount;
-        if (health >= 0)
+        if(amount > 0)
         {
+            PlayerSFX.PlayOneShot(playerHeal);
+        }
+        if (health >= 0)
+        {   
             healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
+        }
+        if(health <= 0 && !lost)
+        {
+            lost = true;
+            deathMenu.SetActive(true);
+            paused = true;
+            PlayerSFX.Pause();
+            SceneSFX.Pause();
+            GameObject.Find("InGameMenuManager").GetComponent<InGameMenuManager>().deathCall();
         }
     }
 

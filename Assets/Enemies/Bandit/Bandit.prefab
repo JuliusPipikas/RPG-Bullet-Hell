@@ -440,6 +440,11 @@ MonoBehaviour:
   spiralRandomWait: 0.1
   SpawnPoofOffset: {x: 0, y: 0, z: 0}
   spawnPoof: {fileID: 4413763016363212477, guid: 056c8a252f514fc40a237bccf26d09fe, type: 3}
+  HitSFX: {fileID: 8300000, guid: 7bccbf2fe8e9cf2409a009133797c599, type: 3}
+  ShootSFX: {fileID: 8300000, guid: d98558a57b4a4d44c81ba78c9b05b40e, type: 3}
+  DeathSFX: {fileID: 8300000, guid: f35776b1720667044a346ff4c15824ad, type: 3}
+  necromancerSpawnSFX: {fileID: 0}
+  necromancerSkeletonsSFX: {fileID: 0}
 --- !u!50 &269924923608925659
 Rigidbody2D:
   serializedVersion: 4
