@@ -47,6 +47,9 @@ TagManager:
   - name: Arena
     uniqueID: 3969316829
     locked: 0
+  - name: Shadows
+    uniqueID: 4116726889
+    locked: 0
   - name: Enemy
     uniqueID: 3006834625
     locked: 0

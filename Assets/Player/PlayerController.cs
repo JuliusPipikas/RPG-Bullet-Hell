@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
 
-        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y+0.11f, 0);
+        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y+0.115f, 0);
         shadow.GetComponent<SpriteRenderer>().sprite = myRenderer.sprite;
         instantiatedShadow = Instantiate(shadow, shadowPos, Quaternion.identity, gameObject.transform);
         instantiatedShadow.transform.rotation = new Quaternion(0, 0, 180, 0);
