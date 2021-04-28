@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject aura;
     public float movementVelocity = 3f;
+    public GameObject shadow;
 
     [SerializeField]
     private Pooler projectilePool1;
@@ -103,6 +104,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject optionsMenu;
 
+    private GameObject instantiatedShadow;
+
     private void Awake()
     {
         controls = new Actions();
@@ -158,7 +161,11 @@ public class PlayerController : MonoBehaviour
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
-        //changeHealth(-9);
+
+        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y+0.11f, 0);
+        shadow.GetComponent<SpriteRenderer>().sprite = myRenderer.sprite;
+        instantiatedShadow = Instantiate(shadow, shadowPos, Quaternion.identity, gameObject.transform);
+        instantiatedShadow.transform.rotation = new Quaternion(0, 0, 180, 0);
     }
 
     private void PlayerShoot()
@@ -298,6 +305,36 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+            // movement forward tilt
+            Vector2 pVec = controls.Player.Movement.ReadValue<Vector2>();
+            float pivot = 0.1f;
+            if(myRenderer.sprite.name == "sheet_10")
+            {
+                pivot = 0.13f;
+            }
+            else if(myRenderer.sprite.name == "sheet_8")
+            {
+                pivot = 0.14f;
+            }
+            if (pVec.x > 0 && facingRight)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, -9);
+                instantiatedShadow.transform.rotation = Quaternion.Euler(0, 0, 198);
+                instantiatedShadow.transform.localPosition = new Vector3(pivot, instantiatedShadow.transform.localPosition.y, instantiatedShadow.transform.localPosition.z);
+            }
+            else if (pVec.x < 0 && !facingRight)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 9);
+                instantiatedShadow.transform.rotation = Quaternion.Euler(0, 0, 162);
+                instantiatedShadow.transform.localPosition = new Vector3(pivot, instantiatedShadow.transform.localPosition.y, instantiatedShadow.transform.localPosition.z);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                instantiatedShadow.transform.rotation = Quaternion.Euler(0, 0, 180);
+                instantiatedShadow.transform.localPosition = new Vector3(0f, instantiatedShadow.transform.localPosition.y, instantiatedShadow.transform.localPosition.z);
+            }
+
             if (controls.Player.Pause.triggered)
             {
                 if (paused)
@@ -346,19 +383,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position += movement * Time.deltaTime;
 
-        // movement forward tilt
-        if (pVec.x > 0 && facingRight)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, -9);
-        }
-        else if (pVec.x < 0 && !facingRight)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 9);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
+        
 
         // hand rotation & tracking
         Vector2 mouseScreenPosition = controls.Player.MousePosition.ReadValue<Vector2>();

@@ -133,6 +133,7 @@ public class InGameMenuManager : MonoBehaviour
         else {
             music.volume = musicSlider.value;
             sfx.volume = sfxSlider.value;
+            Player.GetComponent<AudioSource>().volume = sfxSlider.value;
             separatesfx.volume = sfxSlider.value;
         }
     }

@@ -102,6 +102,8 @@ public class StackController : MonoBehaviour
     private AudioClip rage;
     [SerializeField]
     private AudioClip shoot;
+    public GameObject shadow;
+    public GameObject instantiatedShadow;
 
     private void Awake()
     {
@@ -120,6 +122,11 @@ public class StackController : MonoBehaviour
         SFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
         changeHealth(0);
         SFX.PlayOneShot(spawn);
+
+        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y+0.1f, 0) + gameObject.transform.parent.transform.localPosition;
+        shadow.GetComponent<SpriteRenderer>().sprite = myRenderer.sprite;
+        instantiatedShadow = Instantiate(shadow, shadowPos, Quaternion.identity, gameObject.transform);
+        instantiatedShadow.transform.rotation = new Quaternion(0, 0, 180, 0);
     }
 
     private void Shoot()

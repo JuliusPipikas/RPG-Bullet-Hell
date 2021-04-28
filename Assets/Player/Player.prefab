@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 617659015
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: -96796154962138083, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -185,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4408978541960458119}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.30746377, y: 0.023167536, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6482470092370374405}
@@ -231,7 +231,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1298165415
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -2661919970533589962, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -260,6 +260,7 @@ MonoBehaviour:
   hand: {fileID: 4408978541459380662}
   aura: {fileID: 0}
   movementVelocity: 1.5
+  shadow: {fileID: 0}
   projectilePool1: {fileID: 0}
   projectilePool2: {fileID: 0}
   projectilePool3: {fileID: 0}
@@ -311,6 +312,12 @@ MonoBehaviour:
   playerSwapBlocked: {fileID: 0}
   playerDeath: {fileID: 0}
   playerSpawn: {fileID: 0}
+  loss: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  deathMenu: {fileID: 0}
+  optionsMenu: {fileID: 0}
+  paused: 0
+  DarkScreen: {fileID: 0}
 --- !u!50 &4408978541960458116
 Rigidbody2D:
   serializedVersion: 4

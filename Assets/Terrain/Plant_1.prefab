@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -252819899
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5893540339403691780, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -116,6 +116,8 @@ MonoBehaviour:
   transparentMaterial: {fileID: 2100000, guid: 263be3813eed93f45826b8d2430f185d, type: 2}
   defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   player: {fileID: 0}
+  shadow: {fileID: 7595167386954297920, guid: 5b8e3fd54a1c9f6439189be116f181c1, type: 3}
+  instantiatedShadow: {fileID: 0}
 --- !u!60 &3770680152318678250
 PolygonCollider2D:
   m_ObjectHideFlags: 0

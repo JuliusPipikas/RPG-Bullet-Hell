@@ -10,6 +10,8 @@ public class MainMenuManager : MonoBehaviour
     private GameObject menu;
     [SerializeField]
     private GameObject title;
+    [SerializeField]
+    private GameObject controls;
 
     [SerializeField]
     private GameObject loadingScreen;
@@ -47,8 +49,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private AudioClip menuMusic;
 
+    [SerializeField]
+    private Texture2D cursor;
+
     public void Awake()
     {
+        Cursor.SetCursor(cursor, new Vector2(cursor.width/2, cursor.height/2), CursorMode.Auto);
         QualitySettings.SetQualityLevel(3);
         GameObject preservedValues = GameObject.Find("preservedValues");
         if (preservedValues)
@@ -102,6 +108,19 @@ public class MainMenuManager : MonoBehaviour
         sfx.PlayOneShot(buttonPress);
         menu.SetActive(false);
         options.SetActive(true);
+    }
+
+    public void onControls()
+    {
+        sfx.PlayOneShot(buttonPress);
+        menu.SetActive(false);
+        controls.SetActive(true);
+    }
+    public void onControlsBack()
+    {
+        sfx.PlayOneShot(buttonPress);
+        menu.SetActive(true);
+        controls.SetActive(false);
     }
 
     public void onOptionsBack()

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1288132671
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1888837539432032468, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -140,6 +140,8 @@ MonoBehaviour:
   DeathSFX: {fileID: 8300000, guid: f35776b1720667044a346ff4c15824ad, type: 3}
   necromancerSpawnSFX: {fileID: 0}
   necromancerSkeletonsSFX: {fileID: 0}
+  shadow: {fileID: 7595167386954297920, guid: 5b8e3fd54a1c9f6439189be116f181c1, type: 3}
+  instantiatedShadow: {fileID: 0}
 --- !u!50 &8286939708381709834
 Rigidbody2D:
   serializedVersion: 4
@@ -235,7 +237,7 @@ MonoBehaviour:
   - {x: -0.5, y: 0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 47902
+  m_InstanceId: 94422
 --- !u!1 &4080835732380920333
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +369,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 514682769
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -496,7 +498,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1288132671
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 4372381551759688375, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

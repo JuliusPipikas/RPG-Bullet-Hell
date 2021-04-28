@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -117,6 +118,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private AudioClip necromancerSkeletonsSFX;
 
+    public GameObject shadow;
+    public GameObject instantiatedShadow;
+
     private void Awake()
     {
         health = maxHealth;
@@ -136,6 +140,11 @@ public class EnemyController : MonoBehaviour
         {
             SFX.PlayOneShot(necromancerSpawnSFX);
         }
+
+        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y+0.1f, 0) + gameObject.transform.parent.transform.localPosition;
+        shadow.GetComponent<SpriteRenderer>().sprite = myRenderer.sprite;
+        instantiatedShadow = Instantiate(shadow, shadowPos, Quaternion.identity, gameObject.transform);
+        instantiatedShadow.transform.rotation = new Quaternion(0, 0, 180, 0);
     }
 
     public void setProtection(GameObject go)

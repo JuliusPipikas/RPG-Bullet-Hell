@@ -18,7 +18,7 @@ public class TerrainController : MonoBehaviour
     Material TransparentMaterial;
     [SerializeField]
     Material DefaultMaterial;
-
+    
     public GameObject SpawnTerrain(string name, float x, float y)
     {
         if(name == "Stone")

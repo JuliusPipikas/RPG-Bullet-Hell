@@ -121,7 +121,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1326832433
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2367775211534908594, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -163,6 +163,8 @@ MonoBehaviour:
   spawnPoof: {fileID: 4413763016363212477, guid: 056c8a252f514fc40a237bccf26d09fe, type: 3}
   hit: {fileID: 8300000, guid: 7bccbf2fe8e9cf2409a009133797c599, type: 3}
   death: {fileID: 8300000, guid: 7bd7785df9b1086438b683cb2b05ada8, type: 3}
+  shadow: {fileID: 7595167386954297920, guid: 5b8e3fd54a1c9f6439189be116f181c1, type: 3}
+  instantiatedShadow: {fileID: 0}
 --- !u!50 &4751143169269947966
 Rigidbody2D:
   serializedVersion: 4
@@ -279,7 +281,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 514682769
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 759806175588820344, guid: ab8db5b6abccaee4e87edac88eebd41b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

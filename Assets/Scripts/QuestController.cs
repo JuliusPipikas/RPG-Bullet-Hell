@@ -368,6 +368,12 @@ public class QuestController : MonoBehaviour
         PlayerLevels[0].GetComponents<CapsuleCollider2D>()[1] = PlayerLevels[1].GetComponents<CapsuleCollider2D>()[1];
         PlayerLevels[0].transform.GetChild(0).GetComponents<CapsuleCollider2D>()[0] = PlayerLevels[1].transform.GetChild(0).GetComponent<CapsuleCollider2D>();
         PlayerLevels[0].transform.GetChild(1).transform.localScale = PlayerLevels[1].transform.GetChild(1).transform.localScale;
+
+        SpriteRenderer myRenderer = PlayerLevels[0].GetComponent<SpriteRenderer>();
+        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y + 0.125f, 0);
+        PlayerLevels[0].transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = myRenderer.sprite;
+        PlayerLevels[0].transform.GetChild(2).transform.localPosition = shadowPos;
+
         GameObject spawn = Instantiate(spawnPoof, PlayerLevels[0].transform.position, Quaternion.identity);
         PlayerLevels[0].GetComponent<PlayerController>().movementVelocity += 0.3f;
         visited.Clear();
@@ -444,6 +450,12 @@ public class QuestController : MonoBehaviour
         PlayerLevels[0].GetComponents<CapsuleCollider2D>()[1] = PlayerLevels[2].GetComponents<CapsuleCollider2D>()[1];
         PlayerLevels[0].transform.GetChild(0).GetComponents<CapsuleCollider2D>()[0] = PlayerLevels[2].transform.GetChild(0).GetComponent<CapsuleCollider2D>();
         PlayerLevels[0].transform.GetChild(1).transform.localScale = PlayerLevels[2].transform.GetChild(1).transform.localScale;
+
+        SpriteRenderer myRenderer = PlayerLevels[0].GetComponent<SpriteRenderer>();
+        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y + 0.17f, 0);
+        PlayerLevels[0].transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = myRenderer.sprite;
+        PlayerLevels[0].transform.GetChild(2).transform.localPosition = shadowPos;
+
         GameObject spawn = Instantiate(spawnPoof, PlayerLevels[0].transform.position, Quaternion.identity);
         PlayerLevels[0].GetComponent<PlayerController>().movementVelocity += 0.3f;
         visited.Clear();

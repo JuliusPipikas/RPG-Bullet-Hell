@@ -25,6 +25,8 @@ public class ProtectController : MonoBehaviour
     private AudioClip hit;
     [SerializeField]
     private AudioClip death;
+    public GameObject shadow;
+    public GameObject instantiatedShadow;
 
 
     private void Start()
@@ -39,6 +41,11 @@ public class ProtectController : MonoBehaviour
 
         SFX = GameObject.Find("SoundManager").transform.Find("SFXManager").GetComponent<AudioSource>();
         changeHealth(0);
+
+        Vector3 shadowPos = new Vector3(0, -myRenderer.bounds.size.y+0.1f, 0) + gameObject.transform.localPosition;
+        shadow.GetComponent<SpriteRenderer>().sprite = myRenderer.sprite;
+        instantiatedShadow = Instantiate(shadow, shadowPos, Quaternion.identity, gameObject.transform);
+        instantiatedShadow.transform.rotation = new Quaternion(0, 0, 180, 0);
     }
 
     public void changeHealth(int amount)
