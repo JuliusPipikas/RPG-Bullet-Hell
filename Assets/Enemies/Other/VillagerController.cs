@@ -77,6 +77,11 @@ public class VillagerController : MonoBehaviour
         stopTime /= intensity;
     }
 
+    public float getMovementVelocity()
+    {
+        return movementVelocity;
+    }
+
     public void changeHealth(int amount)
     {
         if (amount < 0)

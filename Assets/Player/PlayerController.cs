@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     private GameObject swapBar;
 
     [SerializeField]
-    private List<Sprite> healthbarSprites;
+    private List<Sprite> healthbarSprites = new List<Sprite>();
     [SerializeField]
     private List<Sprite> swapbarSprites;
 
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private List<Sprite> weaponTextures;
 
-    private int currentWeapon = 0;
+    public int currentWeapon = 0;
     public bool lost = false;
 
     private AudioSource SceneSFX;
@@ -151,6 +151,22 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         setPlayerGotHit(false);
+    }
+
+    public void addHealthBarForTests()
+    {
+        healthBar = new GameObject();
+        healthBar.AddComponent<SpriteRenderer>();
+        for(int i = 0; i < 11; i++)
+        {
+            Sprite spr = Sprite.Create(Texture2D.whiteTexture, Rect.MinMaxRect(i, 0, 0, 0), Vector2.zero);
+            healthbarSprites.Add(spr);
+        }
+    }
+
+    public GameObject getHealthBar()
+    {
+        return healthBar;
     }
 
     private void Start()
@@ -425,83 +441,116 @@ public class PlayerController : MonoBehaviour
         if(currentWeapon == 6) {
             if (i == 6)
             {
-                PlayerSFX.PlayOneShot(playerSwap);
-                SwapToStaff();
-                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[0];
+                if (PlayerSFX)
+                {
+                    PlayerSFX.PlayOneShot(playerSwap);
+                    SwapToStaff();
+                    handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[0];
+                }
                 currentWeapon = 0;
             }
         }
         else if(i == 6 && currentWeapon != 3)
         {
-            SwapToSocial();
-            handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[3];
+            if (PlayerSFX)
+            {
+                SwapToSocial();
+                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[3];
+            }
             currentWeapon = 3;
         }
         else if(i == 1)
         {
-            StartCoroutine(CanSwap());
-            SwapToStaff();
-            handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[0];
+            if (PlayerSFX)
+            {
+                StartCoroutine(CanSwap());
+                SwapToStaff();
+                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[0];
+            }
             currentWeapon = 0;
         }
         else if(i == 2)
         {
-            StartCoroutine(CanSwap());
-            SwapToBook();
-            handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[1];
+            if (PlayerSFX)
+            {
+                StartCoroutine(CanSwap());
+                SwapToBook();
+                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[1];
+            }
             currentWeapon = 1;
         }
         else if (i == 3)
         {
-            StartCoroutine(CanSwap());
-            SwapToCrystal();
-            handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[2];
+            if (PlayerSFX)
+            {
+                StartCoroutine(CanSwap());
+                SwapToCrystal();
+                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[2];
+            }
             currentWeapon = 2;
         }
         else if (i == 4)
         {
-            StartCoroutine(CanSwap());
+            if (PlayerSFX)
+            {
+                StartCoroutine(CanSwap());
+            }
             currentWeapon += 1;
             if(currentWeapon > 2)
             {
-                SwapToStaff();
-                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[0];
+                if (PlayerSFX)
+                {
+                    SwapToStaff();
+                    handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[0];
+                }
                 currentWeapon = 0;
             }
             else
             {
-                if(currentWeapon == 1)
+                if (PlayerSFX)
                 {
-                    SwapToBook();
+                    if (currentWeapon == 1)
+                    {
+                        SwapToBook();
+                    }
+                    else
+                    {
+                        SwapToCrystal();
+                    }
+                    handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[currentWeapon];
                 }
-                else
-                {
-                    SwapToCrystal();
-                }
-                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[currentWeapon];
             }
         }
         else if (i == 5)
         {
-            StartCoroutine(CanSwap());
+            if (PlayerSFX)
+            {
+                StartCoroutine(CanSwap());
+            }
             currentWeapon -= 1;
             if (currentWeapon < 0)
             {
-                SwapToCrystal();
-                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[2];
+                if (PlayerSFX)
+                {
+                    SwapToCrystal();
+                    handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[2];
+                }
                 currentWeapon = 2;
             }
             else
             {
-                if(currentWeapon == 0)
+                if (PlayerSFX)
                 {
-                    SwapToStaff();
+                    if (currentWeapon == 0)
+                    {
+                        SwapToStaff();
+                    }
+                    else
+                    {
+                        SwapToBook();
+                    }
+                    handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[currentWeapon];
                 }
-                else
-                {
-                    SwapToBook();
-                }
-                handForTexture.GetComponent<SpriteRenderer>().sprite = weaponTextures[currentWeapon];
             }
         }
     }
@@ -606,25 +655,38 @@ public class PlayerController : MonoBehaviour
         if(amount < 0)
         {
             StartCoroutine(flashWhite());
-            PlayerSFX.PlayOneShot(playerHit);
+            if (PlayerSFX)
+            {
+                PlayerSFX.PlayOneShot(playerHit);
+            }
         }
         health += amount;
+        if(health < 0)
+        {
+            health = 0;
+        }
         if(amount > 0)
         {
             PlayerSFX.PlayOneShot(playerHeal);
         }
-        if (health >= 0)
+        if (health >= 0 && healthBar)
         {   
             healthBar.GetComponent<SpriteRenderer>().sprite = healthbarSprites[Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f)];
         }
         if(health <= 0 && !lost)
         {
             lost = true;
-            deathMenu.SetActive(true);
+            if (deathMenu)
+            {
+                deathMenu.SetActive(true);
+            }
             paused = true;
-            PlayerSFX.Pause();
-            SceneSFX.Pause();
-            GameObject.Find("InGameMenuManager").GetComponent<InGameMenuManager>().deathCall();
+            if (PlayerSFX)
+            {
+                PlayerSFX.Pause();
+                SceneSFX.Pause();
+                GameObject.Find("InGameMenuManager").GetComponent<InGameMenuManager>().deathCall();
+            }
         }
     }
 
@@ -635,10 +697,13 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator flashWhite()
     {
-        myRenderer.material.shader = shaderGUItext;
-        myRenderer.color = Color.white;
-        yield return new WaitForSeconds(0.1f);
-        myRenderer.material.shader = shaderSpritesDefault;
-        myRenderer.color = Color.white;
+        if (shaderGUItext)
+        {
+            myRenderer.material.shader = shaderGUItext;
+            myRenderer.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+            myRenderer.material.shader = shaderSpritesDefault;
+            myRenderer.color = Color.white;
+        }
     }
 }

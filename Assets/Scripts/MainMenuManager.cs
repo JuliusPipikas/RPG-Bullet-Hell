@@ -78,12 +78,54 @@ public class MainMenuManager : MonoBehaviour
     }
     public void onStartGame()
     {
-        sfx.PlayOneShot(buttonPress);
-        Object.DontDestroyOnLoad(soundManager);
+        if (sfx)
+        {
+            sfx.PlayOneShot(buttonPress);
+            Object.DontDestroyOnLoad(soundManager);
+        }
         menu.SetActive(false);
         loadingScreen.SetActive(true);
         title.SetActive(false);
-        StartCoroutine(LoadAsynchronously());
+        if (sfx)
+        {
+            StartCoroutine(LoadAsynchronously());
+        }
+    }
+
+    public void mockWindows()
+    {
+        menu = new GameObject();
+        title = new GameObject();
+        controls = new GameObject();
+        controls.SetActive(false);
+        loadingScreen = new GameObject();
+        loadingScreen.SetActive(false);
+        options = new GameObject();
+        options.SetActive(false);
+    }
+
+    public bool menuActive()
+    {
+        return menu.activeSelf;
+    }
+
+    public bool optionsActive()
+    {
+        return options.activeSelf;
+    }
+
+    public bool titleActive()
+    {
+        return title.activeSelf;
+    }
+
+    public bool controlsActive()
+    {
+        return controls.activeSelf;
+    }
+    public bool loadingActive()
+    {
+        return loadingScreen.activeSelf;
     }
 
     IEnumerator LoadAsynchronously()
@@ -105,27 +147,39 @@ public class MainMenuManager : MonoBehaviour
 
     public void onOptions()
     {
-        sfx.PlayOneShot(buttonPress);
+        if (sfx)
+        {
+            sfx.PlayOneShot(buttonPress);
+        }
         menu.SetActive(false);
         options.SetActive(true);
     }
 
     public void onControls()
     {
-        sfx.PlayOneShot(buttonPress);
+        if (sfx)
+        {
+            sfx.PlayOneShot(buttonPress);
+        }
         menu.SetActive(false);
         controls.SetActive(true);
     }
     public void onControlsBack()
     {
-        sfx.PlayOneShot(buttonPress);
+        if (sfx)
+        {
+            sfx.PlayOneShot(buttonPress);
+        }
         menu.SetActive(true);
         controls.SetActive(false);
     }
 
     public void onOptionsBack()
     {
-        sfx.PlayOneShot(buttonPress);
+        if (sfx)
+        {
+            sfx.PlayOneShot(buttonPress);
+        }
         menu.SetActive(true);
         options.SetActive(false);
     }

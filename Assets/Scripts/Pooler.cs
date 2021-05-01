@@ -9,10 +9,10 @@ public class Pooler : MonoBehaviour
     private GameObject prefab;
 
     [SerializeField]
-    private int poolSize;
+    private int poolSize = 10;
 
     [SerializeField]
-    private bool expandable;
+    private bool expandable = false;
 
     private List<GameObject> freeList;
     private List<GameObject> usedList;
@@ -28,15 +28,44 @@ public class Pooler : MonoBehaviour
         }
     }
 
+    public void setExpandable()
+    {
+        expandable = true;
+    }
+
+    public void simulateAwake()
+    {
+        freeList = new List<GameObject>();
+        usedList = new List<GameObject>();
+
+        for (int i = 0; i < poolSize; i++)
+        {
+            GenerateNewObject();
+        }
+    }
+
     public List<GameObject> getActiveList()
     {
         return usedList;
     }
 
+    public List<GameObject> getUsedList()
+    {
+        return freeList;
+    }
+
     private void GenerateNewObject()
     {
         Vector3 dir = Vector3.left;
-        GameObject prj = Instantiate(prefab);
+        GameObject prj;
+        if (prefab)
+        {
+            prj = Instantiate(prefab);
+        }
+        else
+        {
+            prj = new GameObject();
+        }
         prj.transform.parent = transform;
         prj.SetActive(false);
         freeList.Add(prj);
@@ -48,6 +77,7 @@ public class Pooler : MonoBehaviour
         else if (freeList.Count == 0 && expandable)
         {
             GenerateNewObject();
+            totalFree++;
         }
 
         GameObject prj = freeList[totalFree - 1];

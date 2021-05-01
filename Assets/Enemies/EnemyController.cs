@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
     private float healthBarOffset = 0.25f;
 
     [SerializeField]
-    private List<Sprite> healthbarSprites;
+    private List<Sprite> healthbarSprites = new List<Sprite>();
 
     [SerializeField]
     private float timeBetweenShots = 1f;
@@ -475,6 +475,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public Pooler GetPooler()
+    {
+        return projectilePool;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.layer != LayerMask.NameToLayer("PlayerProjectile"))
@@ -566,28 +570,53 @@ public class EnemyController : MonoBehaviour
         canWalk = false;
     }
 
+    public int getHealth()
+    {
+        return health;
+    }
+
+    public void addHealthBarForTests()
+    {
+        healthBar = new GameObject();
+        healthBar.AddComponent<SpriteRenderer>();
+        for (int i = 0; i < 11; i++)
+        {
+            Sprite spr = Sprite.Create(Texture2D.whiteTexture, Rect.MinMaxRect(i, 0, 0, 0), Vector2.zero);
+            healthbarSprites.Add(spr);
+        }
+    }
+
+    public GameObject getHealthBar()
+    {
+        return healthBar;
+    }
+
     public void changeHealth(int amount)
     {
-        if (amount < 0)
+        if (amount < 0 && DeathSFX)
         {
             StartCoroutine(flashWhite());
         }
         health += amount;
         if (health <= 0)
         {
-            SFX.PlayOneShot(DeathSFX);
-            GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
-            Destroy(spawn, 0.3f);
-            if (gameObject.name == "Necromancer")
+            health = 0;
+            if (spawnPoof)
             {
-                EncounterGenerator eg = GameObject.Find("EncounterGenerator").GetComponent<EncounterGenerator>();
-                StartCoroutine(eg.Despawn());
+                SFX.PlayOneShot(DeathSFX);
+                GameObject spawn = Instantiate(spawnPoof, transform.position, Quaternion.identity);
+                Destroy(spawn, 0.3f);
+                if (gameObject.name == "Necromancer")
+                {
+                    EncounterGenerator eg = GameObject.Find("EncounterGenerator").GetComponent<EncounterGenerator>();
+                    StartCoroutine(eg.Despawn());
+                }
+                Destroy(gameObject.transform.parent.gameObject, 0.2f);
             }
-            Destroy(gameObject.transform.parent.gameObject, 0.2f);
         }
         else if (health >= 0)
         {
-            SFX.PlayOneShot(HitSFX);
+            if (SFX) { SFX.PlayOneShot(HitSFX); }
             int t = Mathf.FloorToInt((health * 1f) / (maxHealth * 1f) * 10f);
             if(t == 0)
             {
@@ -606,10 +635,13 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator flashWhite()
     {
-        myRenderer.material.shader = shaderGUItext;
-        myRenderer.color = Color.white;
-        yield return new WaitForSeconds(0.1f);
-        myRenderer.material.shader = shaderSpritesDefault;
-        myRenderer.color = Color.white;
+        if (shaderGUItext)
+        {
+            myRenderer.material.shader = shaderGUItext;
+            myRenderer.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+            myRenderer.material.shader = shaderSpritesDefault;
+            myRenderer.color = Color.white;
+        }
     }
 }
